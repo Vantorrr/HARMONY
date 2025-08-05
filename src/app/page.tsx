@@ -1,103 +1,107 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+import { useState, useEffect } from 'react';
+import HeroSection from '@/components/HeroSection';
+import FeaturesSection from '@/components/FeaturesSection';
+import StatsSection from '@/components/StatsSection';
+import CTASection from '@/components/CTASection';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import AuthModal from '@/components/AuthModal';
+import ProfilePage from '@/components/ProfilePage';
+import ClassManagement from '@/components/ClassManagement';
+import LoyaltyProgram from '@/components/LoyaltyProgram';
+import LoadingScreen from '@/components/LoadingScreen';
+import { useAutoNotifications } from '@/hooks/useAutoNotifications';
+
+export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showClassManagement, setShowClassManagement] = useState(false);
+  const [showLoyaltyProgram, setShowLoyaltyProgram] = useState(false);
+  const [userBonusPoints, setUserBonusPoints] = useState(1250);
+
+  // Инициализация автоматических уведомлений
+  const { isEnabled: notificationsEnabled } = useAutoNotifications({
+    enabled: isAuthenticated, // включаем только для авторизованных пользователей
+    checkInterval: 1, // проверяем каждую минуту для демо
+    reminderTime: 30, // напоминание за 30 минут
+    expiryDays: 3, // предупреждение за 3 дня
+    lowBalanceThreshold: 100 // уведомление при балансе менее 100
+  });
+
+  useEffect(() => {
+    // Проверяем авторизацию при загрузке
+    const authData = localStorage.getItem('harmony_auth');
+    if (authData) {
+      const parsed = JSON.parse(authData);
+      setIsAuthenticated(parsed.isAuthenticated);
+    }
+  }, []);
+
+  const handleLoginClick = () => {
+    setIsAuthModalOpen(true);
+  };
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true);
+    setIsAuthModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setShowClassManagement(false);
+    setShowLoyaltyProgram(false);
+  };
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  // Если пользователь авторизован, показываем соответствующий экран
+  if (isAuthenticated) {
+    if (showClassManagement) {
+      return <ClassManagement onBack={() => setShowClassManagement(false)} />;
+    }
+    if (showLoyaltyProgram) {
+      return (
+        <LoyaltyProgram 
+          onBack={() => setShowLoyaltyProgram(false)} 
+          currentPoints={userBonusPoints}
+          onPointsUpdate={setUserBonusPoints}
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+      );
+    }
+    return (
+      <ProfilePage 
+        onLogout={handleLogout} 
+        onShowClassManagement={() => setShowClassManagement(true)}
+        onShowLoyaltyProgram={() => setShowLoyaltyProgram(true)}
+      />
+    );
+  }
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  // Иначе показываем лендинг
+  return (
+    <div className="min-h-screen bg-white">
+      <Header onLoginClick={handleLoginClick} />
+      <HeroSection onLoginClick={handleLoginClick} />
+      <FeaturesSection />
+      <StatsSection />
+      <CTASection onAuthModalOpen={handleLoginClick} />
+      <Footer />
+      
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
+      />
+
+      <LoadingScreen 
+        isLoading={isLoading}
+        onLoadingComplete={handleLoadingComplete}
+      />
     </div>
   );
 }

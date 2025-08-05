@@ -1,26 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 255 255 255; /* Белый фон */
+  --foreground: 33 37 41; /* Темно-серый текст */
+  --card: 255 255 255;
+  --card-foreground: 33 37 41;
+  --popover: 255 255 255;
+  --popover-foreground: 33 37 41;
+  --primary: 0 159 239; /* Голубой */
+  --primary-foreground: 255 255 255;
+  --secondary: 255 193 7; /* Желтый */
+  --secondary-foreground: 33 37 41;
+  --muted: 248 249 250;
+  --muted-foreground: 108 117 125;
+  --accent: 244 67 54; /* Красный */
+  --accent-foreground: 255 255 255;
+  --destructive: 244 67 54;
+  --destructive-foreground: 255 255 255;
+  --border: 233 236 239;
+  --input: 233 236 239;
+  --ring: 0 159 239;
+  --radius: 0.75rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-heading: Poppins, system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 33 37 41;
+    --foreground: 248 249 250;
+    --card: 52 58 64;
+    --card-foreground: 248 249 250;
+    --popover: 52 58 64;
+    --popover-foreground: 248 249 250;
+    --primary: 0 159 239;
+    --primary-foreground: 255 255 255;
+    --secondary: 255 193 7;
+    --secondary-foreground: 33 37 41;
+    --muted: 52 58 64;
+    --muted-foreground: 173 181 189;
+    --accent: 244 67 54;
+    --accent-foreground: 255 255 255;
+    --destructive: 244 67 54;
+    --destructive-foreground: 255 255 255;
+    --border: 73 80 87;
+    --input: 73 80 87;
+    --ring: 0 159 239;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: Inter, system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 600;
+}
+
+/* Harmony Brand Utilities */
+.harmony-gradient {
+  background: linear-gradient(135deg, #009fef 0%, #ffc107 50%, #f44336 100%);
+}
+
+.harmony-text-gradient {
+  background: linear-gradient(135deg, #009fef 0%, #ffc107 50%, #f44336 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #009fef 0%, #ffc107 100%);
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #ffc107 0%, #f44336 100%);
+  color: white;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }

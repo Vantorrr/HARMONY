@@ -226,7 +226,7 @@ export default function HeroSection({ onLoginClick }: HeroSectionProps) {
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 pt-16 sm:pt-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -241,7 +241,7 @@ export default function HeroSection({ onLoginClick }: HeroSectionProps) {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <motion.h1 
-              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-black text-white mb-4 sm:mb-6 leading-tight"
+              className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black text-white mb-4 sm:mb-6 leading-tight"
               animate={{ 
                 textShadow: [
                   "0 0 20px rgba(255,255,255,0.5)", 
@@ -252,7 +252,7 @@ export default function HeroSection({ onLoginClick }: HeroSectionProps) {
               transition={{ duration: 3, repeat: Infinity }}
             >
               <motion.div
-                className="block text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-3 sm:mb-4"
+                className="block text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4"
                 animate={{ 
                   y: [0, -5, 0],
                   scale: [1, 1.05, 1],
@@ -314,7 +314,7 @@ export default function HeroSection({ onLoginClick }: HeroSectionProps) {
               </motion.div>
               
               <motion.div
-                className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-6 font-bold"
+                className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-6 font-bold"
                 animate={{ 
                   y: [0, 5, 0],
                   color: ["#ffffff", "#fde68a", "#ffffff"],

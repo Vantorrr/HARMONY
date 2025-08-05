@@ -37,31 +37,40 @@ const cleanupOldCodes = () => {
 // Отправка SMS через SMSC.ru
 const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean> => {
   try {
-    // В демо режиме просто логируем
-    console.log(`📱 SMS отправлен на ${phone}: ${text}`);
-    
-    // Для реальной интеграции с SMSC.ru раскомментируйте:
-    /*
-    const response = await fetch('https://smsc.ru/sys/send.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        login: process.env.SMSC_LOGIN || '',
-        psw: process.env.SMSC_PASSWORD || '',
-        phones: phone,
-        mes: text,
-        fmt: '3', // JSON формат ответа
-        charset: 'utf-8'
-      })
-    });
+    // Проверяем, есть ли данные для SMSC.ru
+    if (process.env.SMSC_LOGIN && process.env.SMSC_PASSWORD) {
+      console.log(`📱 Отправляем реальную SMS через SMSC.ru на ${phone}`);
+      
+      const response = await fetch('https://smsc.ru/sys/send.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          login: process.env.SMSC_LOGIN,
+          psw: process.env.SMSC_PASSWORD,
+          phones: phone,
+          mes: text,
+          fmt: '3', // JSON формат ответа
+          charset: 'utf-8',
+          sender: 'SMS' // Отправитель
+        })
+      });
 
-    const result = await response.json();
-    return !result.error;
-    */
-    
-    return true; // Демо режим - всегда успешно
+      const result = await response.json();
+      console.log('📤 Ответ SMSC.ru:', result);
+      
+      if (result.error) {
+        console.error('❌ Ошибка SMSC.ru:', result.error_code, result.error);
+        return false;
+      }
+      
+      return true;
+    } else {
+      // Демо режим
+      console.log(`🎮 Demo режим - SMS не отправляется реально на ${phone}: ${text}`);
+      return true;
+    }
   } catch (error) {
     console.error('Ошибка отправки SMS:', error);
     return false;
@@ -102,8 +111,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Генерация кода (в demo режиме фиксированный)
-    const code = process.env.SMSC_LOGIN ? 
+    // Генерация кода
+    const code = process.env.SMSC_LOGIN && process.env.SMSC_PASSWORD ? 
       Math.floor(1000 + Math.random() * 9000).toString() : 
       '1234';
     
@@ -122,11 +131,13 @@ export async function POST(request: NextRequest) {
     const sent = await sendSMSViaProvider(phone, smsText);
 
     if (sent) {
+      const isRealMode = process.env.SMSC_LOGIN && process.env.SMSC_PASSWORD;
+      
       return NextResponse.json({ 
         success: true, 
-        message: 'SMS отправлен',
+        message: isRealMode ? 'SMS отправлен на ваш номер' : 'SMS отправлен',
         // В демо режиме возвращаем код для тестирования
-        ...(!process.env.SMSC_LOGIN && { debugCode: code })
+        ...(!isRealMode && { debugCode: code })
       });
     } else {
       return NextResponse.json(

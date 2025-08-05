@@ -52,8 +52,8 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           phones: phone,
           mes: text,
           fmt: '3', // JSON формат ответа
-          charset: 'utf-8',
-          sender: 'SMS' // Отправитель
+          charset: 'utf-8'
+          // Убираем sender - будет использоваться стандартный
         })
       });
 
@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
       attempts: 0
     });
 
-    // Текст SMS
-    const smsText = `Центр "Гармония":\nВаш код подтверждения: ${code}\nНе сообщайте его никому!`;
+    // Текст SMS (упрощенный для прохождения фильтров)
+    const smsText = `Код: ${code}`;
 
     // Отправка SMS
     const sent = await sendSMSViaProvider(phone, smsText);

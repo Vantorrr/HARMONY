@@ -102,8 +102,10 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Генерация кода
-    const code = Math.floor(1000 + Math.random() * 9000).toString();
+    // Генерация кода (в demo режиме фиксированный)
+    const code = process.env.SMSC_LOGIN ? 
+      Math.floor(1000 + Math.random() * 9000).toString() : 
+      '1234';
     
     // Сохранение в хранилище
     smsStorage.set(phone, {
@@ -124,7 +126,7 @@ export async function POST(request: NextRequest) {
         success: true, 
         message: 'SMS отправлен',
         // В демо режиме возвращаем код для тестирования
-        ...(process.env.NODE_ENV === 'development' && { debugCode: code })
+        ...(!process.env.SMSC_LOGIN && { debugCode: code })
       });
     } else {
       return NextResponse.json(

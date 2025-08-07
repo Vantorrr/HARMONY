@@ -6,15 +6,18 @@ import ProfilePage from '@/components/ProfilePage';
 import ClassManagement from '@/components/ClassManagement';
 import LoyaltyProgram from '@/components/LoyaltyProgram';
 import LoadingScreen from '@/components/LoadingScreen';
+import BottomNavigation from '@/components/BottomNavigation';
+import HomePage from '@/components/HomePage';
 import { useAutoNotifications } from '@/hooks/useAutoNotifications';
 
-export default function HomePage() {
+export default function AppPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showClassManagement, setShowClassManagement] = useState(false);
   const [showLoyaltyProgram, setShowLoyaltyProgram] = useState(false);
   const [userBonusPoints, setUserBonusPoints] = useState(1250);
+  const [activeTab, setActiveTab] = useState<'home' | 'classes' | 'bonuses' | 'profile'>('home');
 
   // Инициализация автоматических уведомлений
   const { isEnabled: notificationsEnabled } = useAutoNotifications({
@@ -47,6 +50,23 @@ export default function HomePage() {
     setIsAuthenticated(false);
     setShowClassManagement(false);
     setShowLoyaltyProgram(false);
+    setActiveTab('home');
+  };
+
+  const handleTabChange = (tab: 'home' | 'classes' | 'bonuses' | 'profile') => {
+    setActiveTab(tab);
+    
+    // Сброс других состояний
+    setShowClassManagement(false);
+    setShowLoyaltyProgram(false);
+
+    // Переключение на соответствующие экраны
+    if (tab === 'classes') {
+      setShowClassManagement(true);
+    } else if (tab === 'bonuses') {
+      setShowLoyaltyProgram(true);
+    }
+    // home и profile обрабатываются в render логике
   };
 
   const handleLoadingComplete = () => {
@@ -55,24 +75,39 @@ export default function HomePage() {
 
   // Если пользователь авторизован, показываем соответствующий экран
   if (isAuthenticated) {
-    if (showClassManagement) {
-      return <ClassManagement onBack={() => setShowClassManagement(false)} />;
-    }
-    if (showLoyaltyProgram) {
-      return (
-        <LoyaltyProgram 
-          onBack={() => setShowLoyaltyProgram(false)} 
-          currentPoints={userBonusPoints}
-          onPointsUpdate={setUserBonusPoints}
-        />
-      );
-    }
     return (
-      <ProfilePage 
-        onLogout={handleLogout} 
-        onShowClassManagement={() => setShowClassManagement(true)}
-        onShowLoyaltyProgram={() => setShowLoyaltyProgram(true)}
-      />
+      <div className="min-h-screen bg-gray-50 pb-20">
+        {showClassManagement && (
+          <ClassManagement onBack={() => handleTabChange('home')} />
+        )}
+        {showLoyaltyProgram && (
+          <LoyaltyProgram 
+            onBack={() => handleTabChange('home')} 
+            currentPoints={userBonusPoints}
+            onPointsUpdate={setUserBonusPoints}
+          />
+        )}
+        {!showClassManagement && !showLoyaltyProgram && activeTab === 'home' && (
+          <HomePage 
+            userName="Родитель"
+            userBonusPoints={userBonusPoints}
+            onShowClassManagement={() => handleTabChange('classes')}
+            onShowLoyaltyProgram={() => handleTabChange('bonuses')}
+          />
+        )}
+        {!showClassManagement && !showLoyaltyProgram && activeTab === 'profile' && (
+          <ProfilePage 
+            onLogout={handleLogout} 
+            onShowClassManagement={() => handleTabChange('classes')}
+            onShowLoyaltyProgram={() => handleTabChange('bonuses')}
+          />
+        )}
+        
+        <BottomNavigation 
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
+      </div>
     );
   }
 

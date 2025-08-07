@@ -1,12 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
-import StatsSection from '@/components/StatsSection';
-import CTASection from '@/components/CTASection';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import AuthModal from '@/components/AuthModal';
 import ProfilePage from '@/components/ProfilePage';
 import ClassManagement from '@/components/ClassManagement';
@@ -82,15 +76,28 @@ export default function HomePage() {
     );
   }
 
-  // Иначе показываем лендинг
+  // Показываем простую форму входа после загрузки
   return (
-    <div className="min-h-screen bg-white">
-      <Header onLoginClick={handleLoginClick} />
-      <HeroSection onLoginClick={handleLoginClick} />
-      <FeaturesSection />
-      <StatsSection />
-      <CTASection onAuthModalOpen={handleLoginClick} />
-      <Footer />
+    <div className="min-h-screen bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 flex items-center justify-center">
+      <div className="text-center">
+        {/* Логотип */}
+        <div className="mb-8">
+          <h1 className="text-6xl font-bold text-white mb-4 font-heading">
+            🌈 ГАРМОНИЯ 🌈
+          </h1>
+          <p className="text-2xl text-white opacity-90">
+            Центр развития ребенка
+          </p>
+        </div>
+
+        {/* Кнопка входа */}
+        <button
+          onClick={handleLoginClick}
+          className="bg-white text-orange-500 font-bold text-xl px-12 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+        >
+          🚀 Войти в систему
+        </button>
+      </div>
       
       <AuthModal
         isOpen={isAuthModalOpen}

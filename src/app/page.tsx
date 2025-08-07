@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import AuthModal from '@/components/AuthModal';
 import ProfilePage from '@/components/ProfilePage';
 import ClassManagement from '@/components/ClassManagement';
@@ -8,6 +9,7 @@ import LoyaltyProgram from '@/components/LoyaltyProgram';
 import LoadingScreen from '@/components/LoadingScreen';
 import BottomNavigation from '@/components/BottomNavigation';
 import HomePage from '@/components/HomePage';
+import SubscriptionShop from '@/components/SubscriptionShop';
 import { useAutoNotifications } from '@/hooks/useAutoNotifications';
 
 export default function AppPage() {
@@ -16,7 +18,31 @@ export default function AppPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showClassManagement, setShowClassManagement] = useState(false);
   const [showLoyaltyProgram, setShowLoyaltyProgram] = useState(false);
+  const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [userBonusPoints, setUserBonusPoints] = useState(1250);
+
+  // Синхронизация бонусов с localStorage для уведомлений
+  useEffect(() => {
+    if (isAuthenticated) {
+      try {
+        const profileData = {
+          bonusPoints: userBonusPoints,
+          subscriptions: [],
+          upcomingClasses: []
+        };
+        localStorage.setItem('harmony_profile', JSON.stringify(profileData));
+
+        // Очищаем уведомления о низком балансе если баланс достаточный
+        if (userBonusPoints > 50) {
+          const sentNotifications = JSON.parse(localStorage.getItem('harmony_sent_notifications') || '[]');
+          const filteredNotifications = sentNotifications.filter((key: string) => !key.startsWith('low_balance_'));
+          localStorage.setItem('harmony_sent_notifications', JSON.stringify(filteredNotifications));
+        }
+      } catch (error) {
+        console.error('Error saving profile to localStorage:', error);
+      }
+    }
+  }, [userBonusPoints, isAuthenticated]);
   const [activeTab, setActiveTab] = useState<'home' | 'classes' | 'bonuses' | 'profile'>('home');
 
   // Инициализация автоматических уведомлений
@@ -25,7 +51,7 @@ export default function AppPage() {
     checkInterval: 1, // проверяем каждую минуту для демо
     reminderTime: 30, // напоминание за 30 минут
     expiryDays: 3, // предупреждение за 3 дня
-    lowBalanceThreshold: 100 // уведомление при балансе менее 100
+    lowBalanceThreshold: 50 // снижаем порог до 50, чтобы не срабатывало на 1250
   });
 
   useEffect(() => {
@@ -50,6 +76,7 @@ export default function AppPage() {
     setIsAuthenticated(false);
     setShowClassManagement(false);
     setShowLoyaltyProgram(false);
+    setShowSubscriptions(false);
     setActiveTab('home');
   };
 
@@ -59,6 +86,7 @@ export default function AppPage() {
     // Сброс других состояний
     setShowClassManagement(false);
     setShowLoyaltyProgram(false);
+    setShowSubscriptions(false);
 
     // Переключение на соответствующие экраны
     if (tab === 'classes') {
@@ -87,12 +115,26 @@ export default function AppPage() {
             onPointsUpdate={setUserBonusPoints}
           />
         )}
-        {!showClassManagement && !showLoyaltyProgram && activeTab === 'home' && (
+        {showSubscriptions && (
+          <SubscriptionShop 
+            onPurchase={(sub) => {
+              alert(`Абонемент "${sub.name}" выбран! Переход к оплате...`);
+              setShowSubscriptions(false);
+              handleTabChange('home');
+            }}
+            onClose={() => {
+              setShowSubscriptions(false);
+              handleTabChange('home');
+            }}
+          />
+        )}
+        {!showClassManagement && !showLoyaltyProgram && !showSubscriptions && activeTab === 'home' && (
           <HomePage 
             userName="Родитель"
             userBonusPoints={userBonusPoints}
             onShowClassManagement={() => handleTabChange('classes')}
             onShowLoyaltyProgram={() => handleTabChange('bonuses')}
+            onShowSubscriptions={() => setShowSubscriptions(true)}
           />
         )}
         {!showClassManagement && !showLoyaltyProgram && activeTab === 'profile' && (
@@ -111,38 +153,96 @@ export default function AppPage() {
     );
   }
 
-  // Показываем простую форму входа после загрузки
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 flex items-center justify-center">
-      <div className="text-center">
-        {/* Логотип */}
-        <div className="mb-8">
-          <h1 className="text-6xl font-bold text-white mb-4 font-heading">
-            🌈 ГАРМОНИЯ 🌈
-          </h1>
-          <p className="text-2xl text-white opacity-90">
-            Центр развития ребенка
-          </p>
-        </div>
+  // Показываем загрузку или форму входа
+  if (isLoading) {
+    return (
+      <LoadingScreen 
+        isLoading={isLoading}
+        onLoadingComplete={handleLoadingComplete}
+      />
+    );
+  }
 
-        {/* Кнопка входа */}
-        <button
-          onClick={handleLoginClick}
-          className="bg-white text-orange-500 font-bold text-xl px-12 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 flex items-center justify-center relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-300/20 rounded-full blur-lg"></div>
+        <div className="absolute bottom-32 left-20 w-40 h-40 bg-red-400/15 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-20 right-10 w-20 h-20 bg-white/15 rounded-full blur-lg"></div>
+      </div>
+      
+      <div className="text-center relative z-10 px-4">
+        <motion.div 
+          className="mb-12"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          🚀 Войти в систему
-        </button>
+          <motion.h1 
+            className="text-5xl sm:text-7xl font-black text-white mb-6 font-heading tracking-wider"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <span className="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">
+              ГАРМОНИЯ
+            </span>
+          </motion.h1>
+          
+          <motion.p 
+            className="text-xl sm:text-3xl text-white/95 font-bold mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Центр развития ребенка
+          </motion.p>
+          
+          <motion.div 
+            className="flex justify-center items-center space-x-4"
+            initial={{ width: 0 }}
+            animate={{ width: "auto" }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
+            <div className="text-yellow-300 text-2xl">✨</div>
+            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
+          </motion.div>
+        </motion.div>
+        
+        <motion.button
+          onClick={handleLoginClick}
+          className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 text-blue-900 font-black text-xl sm:text-2xl px-12 sm:px-16 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-yellow-400/50 transform hover:scale-110 transition-all duration-300 border-4 border-white/30 hover:border-white/60"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+          whileHover={{ 
+            scale: 1.1,
+            boxShadow: "0 25px 50px -12px rgba(251, 191, 36, 0.5)"
+          }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span className="flex items-center justify-center">
+            🚀 Войти в систему
+          </span>
+        </motion.button>
+        
+        <motion.p 
+          className="text-white/80 text-sm mt-6 font-medium"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          Добро пожаловать в мир развития! 🌟
+        </motion.p>
       </div>
       
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         onSuccess={handleAuthSuccess}
-      />
-
-      <LoadingScreen 
-        isLoading={isLoading}
-        onLoadingComplete={handleLoadingComplete}
       />
     </div>
   );

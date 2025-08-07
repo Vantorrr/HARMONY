@@ -28,6 +28,7 @@ import SubscriptionPlansAdmin from './SubscriptionPlansAdmin';
 import ActivityLog from './ActivityLog';
 import AdminStats from './AdminStats';
 import NotificationAdmin from './NotificationAdmin';
+import BannersAdmin from './BannersAdmin';
 
 interface AdminDashboardProps {
   adminUser: any;
@@ -63,6 +64,12 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
       name: 'Посещения',
       icon: <Calendar className="w-5 h-5" />,
       permission: ['all', 'visits', 'clients']
+    },
+    {
+      id: 'banners',
+      name: 'Баннеры',
+      icon: <Activity className="w-5 h-5" />,
+      permission: ['all', 'content']
     },
     {
       id: 'notifications',
@@ -214,6 +221,7 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
                 </p>
               </div>
             )}
+            {activeTab === 'banners' && <BannersAdmin />}
             {activeTab === 'notifications' && <NotificationAdmin adminUser={adminUser} />}
             {activeTab === 'activity' && <ActivityLog adminUser={adminUser} />}
           </>

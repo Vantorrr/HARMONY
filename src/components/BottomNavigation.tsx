@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Home, Calendar, Gift, User } from 'lucide-react';
 
 interface BottomNavigationProps {
   activeTab: 'home' | 'classes' | 'bonuses' | 'profile';
@@ -9,10 +10,10 @@ interface BottomNavigationProps {
 
 export default function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {
   const tabs = [
-    { id: 'home', icon: '🏠', label: 'Главная' },
-    { id: 'classes', icon: '📚', label: 'Занятия' },
-    { id: 'bonuses', icon: '🎁', label: 'Бонусы' },
-    { id: 'profile', icon: '👤', label: 'Профиль' }
+    { id: 'home', icon: Home, label: 'Главная' },
+    { id: 'classes', icon: Calendar, label: 'Занятия' },
+    { id: 'bonuses', icon: Gift, label: 'Бонусы' },
+    { id: 'profile', icon: User, label: 'Профиль' }
   ];
 
   return (
@@ -24,15 +25,15 @@ export default function BottomNavigation({ activeTab, onTabChange }: BottomNavig
             onClick={() => onTabChange(tab.id as any)}
             className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-300 min-w-0 flex-1 ${
               activeTab === tab.id
-                ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white shadow-lg'
-                : 'text-gray-500 hover:text-orange-500'
+                ? 'bg-gradient-to-br from-blue-400 to-yellow-400 text-white shadow-lg'
+                : 'text-gray-500 hover:text-blue-500'
             }`}
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}
           >
             {/* Иконка */}
             <motion.div
-              className={`text-2xl mb-1 ${
+              className={`mb-1 ${
                 activeTab === tab.id ? 'filter drop-shadow-sm' : ''
               }`}
               animate={{
@@ -41,7 +42,11 @@ export default function BottomNavigation({ activeTab, onTabChange }: BottomNavig
               }}
               transition={{ duration: 0.3 }}
             >
-              {tab.icon}
+              <tab.icon 
+                size={22} 
+                className={activeTab === tab.id ? 'text-white' : 'text-gray-500'}
+                strokeWidth={activeTab === tab.id ? 2.5 : 2}
+              />
             </motion.div>
 
             {/* Текст */}

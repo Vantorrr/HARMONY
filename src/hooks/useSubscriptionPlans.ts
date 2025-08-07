@@ -37,6 +37,14 @@ export function useSubscriptionPlans() {
     }));
   };
 
+  // ЭКСТРЕННАЯ ФУНКЦИЯ: Сброс к дефолтным абонементам детского центра
+  const resetToDefaults = () => {
+    console.log('🔄 Сброс абонементов к дефолтным значениям детского центра');
+    localStorage.removeItem(STORAGE_KEY);
+    setPlans(initialPlans);
+    savePlans(initialPlans);
+  };
+
   // Создание нового абонемента
   const createPlan = (planData: Omit<SubscriptionPlan, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newPlan: SubscriptionPlan = {
@@ -133,5 +141,6 @@ export function useSubscriptionPlans() {
     getActivePlans,
     getPopularPlans,
     getStats,
+    resetToDefaults // ЭКСТРЕННАЯ ФУНКЦИЯ
   };
 }

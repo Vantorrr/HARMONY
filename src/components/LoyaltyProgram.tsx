@@ -56,7 +56,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
       maxPoints: 999,
       multiplier: 1,
       perks: ['1% кэшбэк', 'Базовые скидки'],
-      color: 'from-amber-600 to-amber-800',
+      color: 'from-red-500 to-red-700',
       icon: '🥉'
     },
     {
@@ -66,7 +66,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
       maxPoints: 2999,
       multiplier: 1.2,
       perks: ['2% кэшбэк', '5% скидка на абонементы', 'Приоритетная запись'],
-      color: 'from-gray-400 to-gray-600',
+      color: 'from-blue-500 to-blue-700',
       icon: '🥈'
     },
     {
@@ -76,7 +76,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
       maxPoints: 6999,
       multiplier: 1.5,
       perks: ['3% кэшбэк', '10% скидка на абонементы', 'Бесплатная заморозка', 'Персональные консультации'],
-      color: 'from-yellow-400 to-yellow-600',
+      color: 'from-yellow-500 to-yellow-700',
       icon: '🥇'
     },
     {
@@ -86,7 +86,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
       maxPoints: 14999,
       multiplier: 2,
       perks: ['5% кэшбэк', '15% скидка на абонементы', 'VIP зона', 'Персональный педагог 1 раз в месяц'],
-      color: 'from-purple-400 to-purple-600',
+      color: 'from-blue-600 to-red-600',
       icon: '💎'
     },
     {
@@ -96,7 +96,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
       maxPoints: Infinity,
       multiplier: 2.5,
       perks: ['7% кэшбэк', '20% скидка на абонементы', 'Все VIP услуги', 'Персональный менеджер', 'Эксклюзивные мероприятия'],
-      color: 'from-blue-400 to-indigo-600',
+      color: 'from-yellow-600 to-blue-600',
       icon: '💍'
     }
   ];
@@ -225,9 +225,9 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-yellow-400 to-red-400">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-neutral-200">
+      <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center">
             <button
@@ -245,7 +245,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}
-        <div className="flex space-x-1 bg-neutral-100 p-1 rounded-xl mb-8">
+        <div className="flex space-x-1 bg-white/90 backdrop-blur-sm p-1 rounded-xl mb-8">
           {[
             { key: 'overview', label: 'Обзор', icon: <Award className="w-4 h-4" /> },
             { key: 'history', label: 'История', icon: <Clock className="w-4 h-4" /> },

@@ -77,11 +77,11 @@ export default function SubscriptionShop({ onPurchase, onClose }: SubscriptionSh
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-gradient-to-br from-blue-400 via-yellow-400 to-red-400 flex items-center justify-center z-50 p-4 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-2xl p-6 w-full max-w-6xl max-h-[90vh] overflow-y-auto"
+        className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 w-full max-w-6xl max-h-[90vh] overflow-y-auto"
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-heading font-bold text-neutral-900">
@@ -109,7 +109,7 @@ export default function SubscriptionShop({ onPurchase, onClose }: SubscriptionSh
             >
               {sub.popular && (
                 <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 z-20">
-                  <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xl border-2 border-white whitespace-nowrap">
+                  <span className="bg-gradient-to-r from-blue-400 via-yellow-400 to-red-400 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-xl border-2 border-white whitespace-nowrap">
                     🔥 ХИТ 🔥
                   </span>
                 </div>

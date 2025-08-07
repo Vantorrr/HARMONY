@@ -17,7 +17,10 @@ import {
   Crown,
   Gift,
   Zap,
-  Heart
+  Heart,
+  Edit3,
+  BookOpen,
+  Trash2
 } from 'lucide-react';
 import SubscriptionShop from './SubscriptionShop';
 import PaymentModal from './PaymentModal';
@@ -60,6 +63,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState('👨‍👩‍👧‍👦');
+  const [showNameEditor, setShowNameEditor] = useState(false);
+  const [newName, setNewName] = useState('');
   const [currentTab, setCurrentTab] = useState('children');
   const [showChildModal, setShowChildModal] = useState(false);
   const [editingChild, setEditingChild] = useState<any>(null);
@@ -204,6 +209,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
   // Доступные аватарки для семьи
   const familyAvatars = [
     '👨‍👩‍👧‍👦', '👪', '👨‍👩‍👧', '👨‍👩‍👦', '👩‍👩‍👧‍👦', '👨‍👨‍👧‍👦',
+    '👨‍👩‍👧‍👧', '👨‍👩‍👦‍👦', '👩‍👧', '👨‍👧', '👩‍👦', '👨‍👦',
     '💕', '❤️', '💝', '🌟', '✨', '🎈'
   ];
 
@@ -239,7 +245,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
       price: 3000,
       emoji: '🧸',
       color: 'from-pink-400 to-purple-500',
-      bgColor: 'bg-gradient-to-br from-pink-100 to-purple-100',
+              bgColor: 'bg-gradient-to-br from-blue-100 to-blue-200',
       features: ['8 занятий', 'Развитие моторики', 'Игры и песни'],
       illustration: '🎨'
     },
@@ -283,7 +289,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
       price: 6000,
       emoji: '💆‍♀️',
       color: 'from-purple-400 to-pink-500',
-      bgColor: 'bg-gradient-to-br from-purple-100 to-pink-100',
+              bgColor: 'bg-gradient-to-br from-blue-100 to-blue-200',
       features: ['3 сеанса', 'Релаксация', 'Ароматерапия'],
       illustration: '🌸'
     },
@@ -301,7 +307,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-400 via-purple-500 to-blue-500 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 relative overflow-hidden">
       {/* Floating Background Elements */}
       {animationData && (
         <div className="absolute inset-0">
@@ -385,7 +391,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-6 text-white mb-8 relative overflow-hidden shadow-2xl"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-3xl p-6 text-white mb-8 relative overflow-hidden shadow-2xl"
         >
           {/* Background elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
@@ -425,7 +431,17 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                 </motion.div>
               </motion.div>
               <div>
-                <h2 className="text-2xl font-heading font-bold mb-1">{userData.name}</h2>
+                <div className="flex items-center gap-2 mb-1">
+                  <h2 className="text-2xl font-heading font-bold">{userData.name}</h2>
+                  <motion.button
+                    onClick={() => setShowNameEditor(true)}
+                    className="text-white/80 hover:text-white p-1 rounded-full hover:bg-white/10"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    ✏️
+                  </motion.button>
+                </div>
                 <div className="flex items-center mb-2">
                   <Crown className="w-4 h-4 text-yellow-300 mr-2" />
                   <span className="text-white/90 font-medium">Level {userData.level}</span>
@@ -528,7 +544,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowChildModal(true)}
                   >
-                    ➕ <span className="hidden xs:inline ml-1">Добавить ребенка</span>
+                                            <Plus size={16} className="mr-1" />
+                        <span className="hidden xs:inline">Добавить ребенка</span>
                   </motion.button>
                 </div>
                 
@@ -536,7 +553,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                   {userData.children.map((child) => (
                     <motion.div
                       key={child.id}
-                      className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
+                      className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
                       whileHover={{ scale: 1.02 }}
                     >
                       <div className="flex items-center gap-4 flex-1">
@@ -565,7 +582,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                             setShowChildModal(true);
                           }}
                         >
-                          ✏️ <span className="hidden xs:inline ml-1">Редактировать</span>
+                          <Edit3 size={16} className="mr-1" />
+                          <span className="hidden xs:inline">Редактировать</span>
                         </motion.button>
                         
                         <motion.button
@@ -574,7 +592,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                           whileTap={{ scale: 0.95 }}
                           onClick={() => onShowClassManagement?.()}
                         >
-                          📅 <span className="hidden xs:inline ml-1">Занятия</span>
+                          <BookOpen size={16} className="mr-1" />
+                          <span className="hidden xs:inline">Занятия</span>
                         </motion.button>
                         
                         <motion.button
@@ -587,7 +606,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                             }
                           }}
                         >
-                          🗑️ <span className="hidden xs:inline ml-1">Удалить</span>
+                          <Trash2 size={16} className="mr-1" />
+                          <span className="hidden xs:inline">Удалить</span>
                         </motion.button>
                       </div>
                     </motion.div>
@@ -595,7 +615,9 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                   
                   {userData.children.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                      <div className="text-6xl mb-4">👶</div>
+                      <div className="flex justify-center mb-4">
+                        <User size={64} className="text-gray-400" />
+                      </div>
                       <p className="text-lg mb-4">Детей пока нет</p>
                       <motion.button
                         className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-3 rounded-full font-bold"
@@ -603,7 +625,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setShowChildModal(true)}
                       >
-                        ➕ Добавить первого ребенка
+                        <Plus size={16} className="inline mr-2" />
+                        Добавить первого ребенка
                       </motion.button>
                     </div>
                   )}
@@ -709,7 +732,9 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl text-center"
               >
-                <div className="text-6xl mb-4">🎁</div>
+                <div className="flex justify-center mb-4">
+                  <Gift size={64} className="text-yellow-500" />
+                </div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">Бонусная программа</h3>
                 <div className="text-4xl font-bold text-yellow-500 mb-4">{userData.bonusPoints}</div>
                 <p className="text-gray-600 mb-6">У вас есть {userData.bonusPoints} бонусных баллов</p>
@@ -743,7 +768,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
           >
             <div className="flex items-center justify-center">
               <Bell className="w-6 h-6 mr-3" />
-              <h3 className="font-bold text-lg">🔔 Настройки уведомлений</h3>
+              <h3 className="font-bold text-lg">Настройки уведомлений</h3>
             </div>
           </motion.button>
         </motion.div>
@@ -856,6 +881,61 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
         )}
       </AnimatePresence>
 
+      {/* Name Editor Modal */}
+      <AnimatePresence>
+        {showNameEditor && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white rounded-2xl p-6 w-full max-w-md"
+            >
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Изменить название семьи</h3>
+              
+              <input
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder={userData.name}
+                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                autoFocus
+              />
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setShowNameEditor(false);
+                    setNewName('');
+                  }}
+                  className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-medium"
+                >
+                  Отмена
+                </button>
+                <button
+                  onClick={() => {
+                    if (newName.trim()) {
+                      // Здесь будет сохранение имени
+                      console.log('Новое имя:', newName);
+                      setShowNameEditor(false);
+                      setNewName('');
+                    }
+                  }}
+                  className="flex-1 bg-blue-500 text-white py-3 rounded-xl font-medium"
+                >
+                  Сохранить
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }
@@ -879,7 +959,12 @@ function ChildModal({ isOpen, onClose, onSave, editingChild }: any) {
     }
   }, [editingChild]);
 
-  const childAvatars = ['👶', '👧', '👦', '🧒', '👨', '👩', '🐱', '🐶', '🐰', '🐻', '🐸', '🦄'];
+  const childAvatars = [
+    '👶', '👧', '👦', '🧒', '👩', '👨', 
+    '🦄', '🐱', '🐶', '🐰', '🐻', '🐼',
+    '🦊', '🐸', '🐯', '🦁', '🐵', '🐨',
+    '🎭', '🎨', '🎪', '🎯', '⚽', '🏀'
+  ];
 
   const handleSave = () => {
     if (!name.trim() || !age) {
@@ -917,7 +1002,11 @@ function ChildModal({ isOpen, onClose, onSave, editingChild }: any) {
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          {editingChild ? '✏️ Редактировать ребенка' : '➕ Добавить ребенка'}
+                          {editingChild ? (
+                  <><Edit3 size={20} className="inline mr-2" />Редактировать ребенка</>
+                ) : (
+                  <><Plus size={20} className="inline mr-2" />Добавить ребенка</>
+                )}
         </h3>
 
         {/* Имя */}

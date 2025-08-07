@@ -36,7 +36,7 @@ const subscriptionSchema = z.object({
 type SubscriptionForm = z.infer<typeof subscriptionSchema>;
 
 export default function SubscriptionPlansAdmin({ adminUser }: SubscriptionPlansAdminProps) {
-  const { plans, addPlan, updatePlan, deletePlan, togglePlanStatus, togglePopular, duplicatePlan } = useSubscriptionPlans();
+  const { plans, addPlan, updatePlan, deletePlan, togglePlanStatus, togglePopular, duplicatePlan, resetToDefaults } = useSubscriptionPlans();
   const [showForm, setShowForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan | null>(null);
@@ -174,15 +174,31 @@ export default function SubscriptionPlansAdmin({ adminUser }: SubscriptionPlansA
             <h1 className="text-3xl font-bold text-white mb-2">Управление тарифами</h1>
             <p className="text-white/80">Создавайте и редактируйте абонементы для клиентов</p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={openCreateForm}
-            className="bg-white text-primary-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Создать абонемент
-          </motion.button>
+          <div className="flex gap-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={openCreateForm}
+              className="bg-white text-primary-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              Создать абонемент
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                if (confirm('🔄 СБРОСИТЬ ВСЕ АБОНЕМЕНТЫ к дефолтным для детского центра?\n\nЭто удалит все текущие абонементы и восстановит правильные!')) {
+                  resetToDefaults();
+                  alert('✅ Абонементы сброшены к детскому центру!');
+                }
+              }}
+              className="bg-red-500 text-white px-4 py-3 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            >
+              🔄 Сброс
+            </motion.button>
+          </div>
         </div>
       </div>
 

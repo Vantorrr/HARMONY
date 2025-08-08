@@ -42,56 +42,67 @@ export default function ClassManagement({ onBack }: ClassManagementProps) {
         id: '1',
         date: '2024-08-06',
         time: '09:00',
-        type: 'Силовое занятие',
-        teacher: 'Иван Петров',
-        location: 'Зал №1',
+        type: 'Раннее развитие',
+        teacher: 'Анна Петрова',
+        location: 'Желтый кабинет',
         status: 'upcoming',
-        participants: 8,
-        maxParticipants: 12
+        participants: 6,
+        maxParticipants: 8
       },
       {
         id: '2',
         date: '2024-08-05',
         time: '18:30',
-        type: 'Йога',
+        type: 'Гончарное ремесло',
         teacher: 'Мария Сидорова',
-        location: 'Зал №2',
+        location: 'Фиолетовый кабинет',
         status: 'completed',
-        participants: 15,
-        maxParticipants: 15
+        participants: 8,
+        maxParticipants: 10
       },
       {
         id: '3',
         date: '2024-08-04',
         time: '10:00',
-        type: 'Кардио',
+        type: 'Математика для школьников',
         teacher: 'Алексей Кузнецов',
-        location: 'Зал №1',
+        location: 'Синий кабинет',
         status: 'completed',
-        participants: 10,
-        maxParticipants: 15
+        participants: 5,
+        maxParticipants: 8
       },
       {
         id: '4',
         date: '2024-08-03',
         time: '19:00',
-        type: 'Функциональное занятие',
+        type: 'Рисование для детей',
         teacher: 'Елена Волкова',
-        location: 'Зал №3',
+        location: 'Фиолетовый кабинет',
         status: 'missed',
-        participants: 12,
-        maxParticipants: 15
+        participants: 7,
+        maxParticipants: 10
       },
       {
         id: '5',
         date: '2024-08-07',
         time: '17:00',
-        type: 'Групповое занятие',
-        teacher: 'Дмитрий Новиков',
-        location: 'Зал №2',
+        type: 'Английский для малышей 3-4 года',
+        teacher: 'София Новикова',
+        location: 'Желтый кабинет',
         status: 'upcoming',
-        participants: 5,
-        maxParticipants: 20
+        participants: 4,
+        maxParticipants: 6
+      },
+      {
+        id: '6',
+        date: '2024-08-08',
+        time: '11:00',
+        type: 'Комплексные занятия',
+        teacher: 'Татьяна Зеленская',
+        location: 'Зеленый кабинет',
+        status: 'upcoming',
+        participants: 8,
+        maxParticipants: 12
       }
     ];
 
@@ -126,6 +137,51 @@ export default function ClassManagement({ onBack }: ClassManagementProps) {
       case 'cancelled': return 'Отменено';
       default: return 'Неизвестно';
     }
+  };
+
+  // Функция для определения цвета зала
+  const getRoomColor = (type: string, location: string) => {
+    // Определяем по названию кабинета
+    if (location.toLowerCase().includes('желт')) {
+      return 'bg-yellow-500';
+    }
+    if (location.toLowerCase().includes('зелен')) {
+      return 'bg-green-500';
+    }
+    if (location.toLowerCase().includes('син')) {
+      return 'bg-blue-500';
+    }
+    if (location.toLowerCase().includes('фиолет')) {
+      return 'bg-purple-500';
+    }
+    
+    // Если кабинет не указан, определяем по типу занятия
+    // Фиолетовый - гончарка и рисование
+    if (type.toLowerCase().includes('гончарн') || type.toLowerCase().includes('рисован') || 
+        type.toLowerCase().includes('керамик') || type.toLowerCase().includes('творчеств')) {
+      return 'bg-purple-500';
+    }
+    
+    // Желтый - раннее развитие (до 4 лет) и английский 3-4 года
+    if (type.toLowerCase().includes('раннее') || type.toLowerCase().includes('развитие') ||
+        type.toLowerCase().includes('малыш') || type.toLowerCase().includes('3-4') ||
+        type.toLowerCase().includes('англ') || type.toLowerCase().includes('english')) {
+      return 'bg-yellow-500';
+    }
+    
+    // Зеленый - комплексные и групповые
+    if (type.toLowerCase().includes('комплекс') || type.toLowerCase().includes('групповое')) {
+      return 'bg-green-500';
+    }
+    
+    // Синий - остальные образовательные
+    if (type.toLowerCase().includes('математик') || type.toLowerCase().includes('логопед') ||
+        type.toLowerCase().includes('подготовк')) {
+      return 'bg-blue-500';
+    }
+    
+    // По умолчанию серый
+    return 'bg-gray-400';
   };
 
   const filteredSessions = sessions.filter(session => {
@@ -266,7 +322,8 @@ export default function ClassManagement({ onBack }: ClassManagementProps) {
                       {session.teacher}
                     </div>
                     <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-2" />
+                      <div className={`w-3 h-3 rounded-full mr-2 ${getRoomColor(session.type, session.location)}`}></div>
+                      <MapPin className="w-4 h-4 mr-1" />
                       {session.location}
                     </div>
                   </div>

@@ -23,7 +23,7 @@ export default function HomePage({
   const { activeBanners } = useBanners();
   const [currentBanner, setCurrentBanner] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults'>('babies');
+  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery'>('babies');
 
   // Автоматическое переключение баннеров
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function HomePage({
     return () => clearInterval(interval);
   }, [activeBanners.length]);
 
-  const handleGroupClick = (group: 'babies' | 'school' | 'adults') => {
+  const handleGroupClick = (group: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery') => {
     setSelectedGroup(group);
     setIsModalOpen(true);
   };
@@ -96,15 +96,15 @@ export default function HomePage({
 
       {/* Карточки возрастных групп */}
       <motion.div 
-        className="mb-8 px-4"
+        className="mb-8 px-4 mt-8 pt-4"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <div className="grid grid-cols-3 gap-3">
+        <div className="flex gap-4 overflow-x-auto pb-4 pt-2 scrollbar-hide">
           {/* Малыши - Раннее развитие */}
           <motion.div
-            className="flex flex-col items-center text-center cursor-pointer group"
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
             whileHover={{ 
               scale: 1.08, 
               y: -8,
@@ -126,7 +126,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
               animate={{
                 y: [0, -4, 0],
                 rotate: [0, 2, -2, 0]
@@ -174,7 +174,7 @@ export default function HomePage({
 
           {/* Школьники - Подготовка к школе */}
           <motion.div
-            className="flex flex-col items-center text-center cursor-pointer group"
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
             whileHover={{ 
               scale: 1.08, 
               y: -8,
@@ -196,7 +196,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
               animate={{
                 y: [0, -6, 0],
                 rotate: [0, -2, 2, 0]
@@ -245,7 +245,7 @@ export default function HomePage({
 
           {/* Взрослые - Шахматы и досуг */}
           <motion.div
-            className="flex flex-col items-center text-center cursor-pointer group"
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
             whileHover={{ 
               scale: 1.08, 
               y: -8,
@@ -267,7 +267,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-gradient-to-br from-red-400 via-pink-400 to-purple-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-red-400 via-pink-400 to-purple-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
               animate={{
                 y: [0, -5, 0],
                 rotate: [0, 3, -3, 0]
@@ -311,6 +311,574 @@ export default function HomePage({
               transition={{ delay: 0.9 }}
             >
               Для всех возрастов
+            </motion.p>
+          </motion.div>
+
+          {/* Комплексные занятия */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('complex')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 0.7,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -4, 0],
+                rotate: [0, -2, 2, 0]
+              }}
+              transition={{
+                duration: 3.8,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 2
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 4, -4, 0]
+                }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 2.2
+                }}
+              >
+                🌟
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+            >
+              Комплексные
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0 }}
+            >
+              Малыши 2,5-4 года
+            </motion.p>
+          </motion.div>
+
+          {/* Логопедические занятия */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('speech')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 0.8,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-400 via-indigo-500 to-blue-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -3, 0],
+                rotate: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 4.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 2.4
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.08, 1],
+                  rotate: [0, -2, 2, 0]
+                }}
+                transition={{
+                  duration: 3.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 2.6
+                }}
+              >
+                🗣️
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0 }}
+            >
+              Логопедия
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+            >
+              Дети от 3 лет и взрослые
+            </motion.p>
+          </motion.div>
+
+          {/* Математика */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('math')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 0.9,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -4, 0],
+                rotate: [0, 2, -2, 0]
+              }}
+              transition={{
+                duration: 3.6,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 2.8
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.12, 1],
+                  rotate: [0, 3, -3, 0]
+                }}
+                transition={{
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 3
+                }}
+              >
+                🔢
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+            >
+              Математика
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              1-9 класс, ОГЭ
+            </motion.p>
+          </motion.div>
+
+          {/* Массаж */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('massage')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.0,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -2, 0],
+                rotate: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 4.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 3.2
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.06, 1],
+                  rotate: [0, 2, -2, 0]
+                }}
+                transition={{
+                  duration: 3.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 3.4
+                }}
+              >
+                👐
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              Массаж
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3 }}
+            >
+              Дети и взрослые
+            </motion.p>
+          </motion.div>
+
+          {/* Продленка */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('afterschool')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.1,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-lime-400 via-yellow-400 to-orange-400 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -3, 0],
+                rotate: [0, 2, -2, 0]
+              }}
+              transition={{
+                duration: 3.4,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 3.6
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, -3, 3, 0]
+                }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 3.8
+                }}
+              >
+                🌞
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3 }}
+            >
+              Продлёнка
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.4 }}
+            >
+              1-6 класс
+            </motion.p>
+          </motion.div>
+
+          {/* Мастерская */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('workshop')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.2,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-slate-500 via-gray-600 to-zinc-700 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -2, 0],
+                rotate: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 4.8,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 4
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  rotate: [0, 2, -2, 0]
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 4.2
+                }}
+              >
+                🔧
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.4 }}
+            >
+              Мастерская
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+            >
+              Для мальчиков
+            </motion.p>
+          </motion.div>
+
+          {/* Рисование */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('drawing')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.3,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-pink-400 via-rose-500 to-purple-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -3, 0],
+                rotate: [0, 2, -2, 0]
+              }}
+              transition={{
+                duration: 3.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 4.4
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.08, 1],
+                  rotate: [0, -2, 2, 0]
+                }}
+                transition={{
+                  duration: 2.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 4.6
+                }}
+              >
+                🎨
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+            >
+              Рисование
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.6 }}
+            >
+              Дети и взрослые
+            </motion.p>
+          </motion.div>
+
+          {/* Гончарное ремесло */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('pottery')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.4,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-amber-600 via-orange-700 to-red-800 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              animate={{
+                y: [0, -2, 0],
+                rotate: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 5.2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 4.8
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.04, 1],
+                  rotate: [0, 1, -1, 0]
+                }}
+                transition={{
+                  duration: 4.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 5
+                }}
+              >
+                🏺
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-white text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.6 }}
+            >
+              Гончарное
+            </motion.h3>
+            <motion.p 
+              className="text-white/80 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.7 }}
+            >
+              Дети и взрослые
             </motion.p>
           </motion.div>
         </div>

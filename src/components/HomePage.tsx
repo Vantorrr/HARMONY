@@ -25,6 +25,9 @@ export default function HomePage({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery'>('babies');
 
+  const circleClass =
+    "w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-white flex items-center justify-center shadow-md mb-3 border border-gray-200 group-hover:shadow-lg group-hover:border-gray-300 transition-all duration-300 mx-auto";
+
   // Автоматическое переключение баннеров
   useEffect(() => {
     if (activeBanners.length === 0) return;
@@ -124,7 +127,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              className={circleClass}
               animate={{
                 y: [0, -4, 0],
                 rotate: [0, 2, -2, 0]
@@ -138,7 +141,7 @@ export default function HomePage({
               }}
             >
               <motion.div 
-                className="text-4xl"
+                className="text-3xl"
                 animate={{
                   scale: [1, 1.1, 1],
                 }}
@@ -153,7 +156,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -161,7 +164,7 @@ export default function HomePage({
               Раннее развитие
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
@@ -194,7 +197,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+              className={circleClass}
               animate={{
                 y: [0, -6, 0],
                 rotate: [0, -2, 2, 0]
@@ -208,7 +211,7 @@ export default function HomePage({
               }}
             >
               <motion.div 
-                className="text-4xl"
+                className="text-3xl"
                 animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 5, -5, 0]
@@ -224,7 +227,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
@@ -265,7 +268,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-red-400 via-pink-400 to-purple-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -5, 0],
                 rotate: [0, 3, -3, 0]
@@ -295,7 +298,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
@@ -303,7 +306,7 @@ export default function HomePage({
               Шахматы
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
@@ -336,7 +339,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -4, 0],
                 rotate: [0, -2, 2, 0]
@@ -366,7 +369,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
@@ -374,7 +377,7 @@ export default function HomePage({
               Комплексные
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0 }}
@@ -407,7 +410,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-400 via-indigo-500 to-blue-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -3, 0],
                 rotate: [0, 1, -1, 0]
@@ -437,7 +440,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0 }}
@@ -445,7 +448,7 @@ export default function HomePage({
               Логопедия
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
@@ -478,7 +481,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -4, 0],
                 rotate: [0, 2, -2, 0]
@@ -549,7 +552,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -2, 0],
                 rotate: [0, 1, -1, 0]
@@ -620,7 +623,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-lime-400 via-yellow-400 to-orange-400 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -3, 0],
                 rotate: [0, 2, -2, 0]
@@ -691,7 +694,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-slate-500 via-gray-600 to-zinc-700 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -2, 0],
                 rotate: [0, 1, -1, 0]
@@ -762,7 +765,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-pink-400 via-rose-500 to-purple-500 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -3, 0],
                 rotate: [0, 2, -2, 0]
@@ -833,7 +836,7 @@ export default function HomePage({
             }}
           >
             <motion.div 
-              className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-amber-600 via-orange-700 to-red-800 flex items-center justify-center shadow-xl mb-3 border-4 border-white/80 group-hover:border-white transition-all duration-300 mx-auto"
+            className={circleClass}
               animate={{
                 y: [0, -2, 0],
                 rotate: [0, 1, -1, 0]
@@ -892,7 +895,7 @@ export default function HomePage({
         >
           <motion.div
             key={currentBanner}
-            className={`bg-gradient-to-r ${activeBanners[currentBanner]?.bg} rounded-2xl p-5 shadow-lg relative overflow-hidden`}
+            className={`bg-gradient-to-r ${activeBanners[currentBanner]?.bg} rounded-2xl p-5 shadow relative overflow-hidden`}
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}

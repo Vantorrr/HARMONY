@@ -273,7 +273,7 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl p-8 text-white relative overflow-hidden"
+              className="bg-white rounded-2xl p-8 text-neutral-900 border border-neutral-200 relative overflow-hidden shadow-sm"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
               
@@ -283,13 +283,13 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
                     <h2 className="text-2xl font-heading font-bold mb-2">
                       {currentLevel?.icon} {currentLevel?.name}
                     </h2>
-                    <p className="text-white/80">
+                    <p className="text-neutral-500">
                       Ваш текущий статус в программе лояльности
                     </p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold">{currentPoints.toLocaleString()}</div>
-                    <div className="text-white/80">бонусных баллов</div>
+                    <div className="text-neutral-500">бонусных баллов</div>
                   </div>
                 </div>
 
@@ -299,9 +299,9 @@ export default function LoyaltyProgram({ onBack, currentPoints, onPointsUpdate }
                       <span>До уровня "{nextLevel.name}"</span>
                       <span>{nextLevel.minPoints - currentPoints} баллов</span>
                     </div>
-                    <div className="bg-white/20 rounded-full h-3">
+                    <div className="bg-neutral-200 rounded-full h-3">
                       <div 
-                        className="bg-white h-3 rounded-full transition-all duration-500"
+                        className="bg-blue-600 h-3 rounded-full transition-all duration-500"
                         style={{ width: `${getProgressToNextLevel()}%` }}
                       />
                     </div>

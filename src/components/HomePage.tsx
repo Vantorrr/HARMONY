@@ -866,7 +866,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6 }}
@@ -874,7 +874,7 @@ export default function HomePage({
               Гончарное
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.7 }}

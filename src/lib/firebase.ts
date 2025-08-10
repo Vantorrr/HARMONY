@@ -2,23 +2,24 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getMessaging, getToken, onMessage, type Messaging } from 'firebase/messaging';
 
-// Firebase config (в реальном проекте это будет в переменных окружения)
+// Firebase config (используем env, а при отсутствии — реальные ключи, переданные заказчиком)
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "demo-api-key",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "harmony-fitness-demo.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "harmony-fitness-demo",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "harmony-fitness-demo.appspot.com",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "123456789",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:123456789:web:abcdef123456789",
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-XXXXXXXXXX"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDEcUXhC01pgmAxUu5xvty6iESABnqivS8",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "harmony-center-9ac52.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "harmony-center-9ac52",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "harmony-center-9ac52.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "874294058057",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:874294058057:web:8324034e986666e7f77398",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-VXMPLRXXV1"
 };
 
 // VAPID ключ для Web Push (в реальном проекте из Firebase Console)
-const VAPID_KEY = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY || "demo-vapid-key";
+const VAPID_KEY = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY || "";
 
 // Demo режим для разработки
-const IS_DEMO_MODE = !process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 
-                     process.env.NEXT_PUBLIC_FIREBASE_API_KEY === "demo-api-key";
+const HAS_REAL_CONFIG = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "demo-api-key";
+const HAS_VAPID = !!VAPID_KEY && VAPID_KEY !== "demo-vapid-key";
+const IS_DEMO_MODE = !(HAS_REAL_CONFIG && HAS_VAPID);
 
 // Инициализация Firebase
 let app;
@@ -73,6 +74,11 @@ export const getMessagingToken = async (): Promise<string | null> => {
     const swPath = IS_DEMO_MODE ? '/sw-demo.js' : '/firebase-messaging-sw.js';
     const registration = await navigator.serviceWorker.register(swPath);
     
+    if (!VAPID_KEY) {
+      console.warn('FCM VAPID key is missing. Push token cannot be obtained. Add NEXT_PUBLIC_FIREBASE_VAPID_KEY to enable real pushes. Fallback to local notifications will be used.');
+      return null;
+    }
+
     const token = await getToken(messaging, {
       vapidKey: VAPID_KEY,
       serviceWorkerRegistration: registration

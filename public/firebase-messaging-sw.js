@@ -6,12 +6,12 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Firebase config (тот же что в main app)
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "harmony-fitness-demo.firebaseapp.com", 
-  projectId: "harmony-fitness-demo",
-  storageBucket: "harmony-fitness-demo.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456789"
+  apiKey: "AIzaSyDEcUXhC01pgmAxUu5xvty6iESABnqivS8",
+  authDomain: "harmony-center-9ac52.firebaseapp.com", 
+  projectId: "harmony-center-9ac52",
+  storageBucket: "harmony-center-9ac52.firebasestorage.app",
+  messagingSenderId: "874294058057",
+  appId: "1:874294058057:web:8324034e986666e7f77398"
 };
 
 // Инициализация Firebase в Service Worker

@@ -29,7 +29,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
   };
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md fixed w-full z-50 border-b border-pink-200/30 shadow-lg">
+    <nav className="bg-white fixed w-full z-50 border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
@@ -49,10 +49,8 @@ export default function Header({ onLoginClick }: HeaderProps) {
                   priority
                 />
               </div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold">
-                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                  ГАРМОНИЯ
-                </span>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold text-gray-900">
+                ГАРМОНИЯ
               </h1>
               <motion.div
                 animate={{ 
@@ -75,29 +73,28 @@ export default function Header({ onLoginClick }: HeaderProps) {
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <motion.a 
               href="#features" 
-              className="text-neutral-700 hover:text-pink-500 transition-colors font-medium text-sm lg:text-base flex items-center"
+              className="text-neutral-700 hover:text-blue-600 transition-colors font-medium text-sm lg:text-base flex items-center"
               whileHover={{ scale: 1.05 }}
             >
-              🎨 Занятия
+              🎨 Расписание
             </motion.a>
             <motion.a 
               href="#pricing" 
-              className="text-neutral-700 hover:text-blue-500 transition-colors font-medium text-sm lg:text-base flex items-center"
+              className="text-neutral-700 hover:text-blue-600 transition-colors font-medium text-sm lg:text-base flex items-center"
               whileHover={{ scale: 1.05 }}
             >
               💰 Цены
             </motion.a>
             <motion.a 
               href="#contact" 
-              className="text-neutral-700 hover:text-purple-500 transition-colors font-medium text-sm lg:text-base flex items-center"
+              className="text-neutral-700 hover:text-blue-600 transition-colors font-medium text-sm lg:text-base flex items-center"
               whileHover={{ scale: 1.05 }}
             >
               📞 Контакты
             </motion.a>
             <motion.button 
               onClick={onLoginClick} 
-              className="bg-gradient-to-r from-pink-400 to-purple-500 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-full text-sm lg:text-base font-bold 
-                       hover:from-pink-500 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-white/20"
+              className="bg-blue-600 text-white px-4 lg:px-6 py-2 lg:py-3 rounded-full text-sm lg:text-base font-bold transition-all duration-300 shadow hover:shadow-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -110,8 +107,8 @@ export default function Header({ onLoginClick }: HeaderProps) {
             {/* Mobile Login Button */}
             <motion.button 
               onClick={onLoginClick}
-              className="bg-gradient-to-r from-pink-400 to-purple-500 text-white px-3 py-1.5 rounded-full text-sm font-bold 
-                       shadow-lg border-2 border-white/20 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="bg-blue-600 text-white px-3 py-1.5 rounded-full text-sm font-bold 
+                       shadow min-h-[44px] min-w-[44px] flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -119,9 +116,9 @@ export default function Header({ onLoginClick }: HeaderProps) {
             </motion.button>
             
             {/* Hamburger Menu */}
-            <motion.button
+              <motion.button
               onClick={toggleMobileMenu}
-              className="p-2 rounded-lg bg-white/50 backdrop-blur-sm border-2 border-pink-200/50 min-h-[44px] min-w-[44px] 
+                className="p-2 rounded-lg bg-white border border-gray-200 min-h-[44px] min-w-[44px] 
                        flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -162,29 +159,29 @@ export default function Header({ onLoginClick }: HeaderProps) {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="md:hidden border-t border-pink-200/30 bg-white/95 backdrop-blur-md"
+              className="md:hidden border-t border-gray-200 bg-white"
             >
               <div className="px-4 py-6 space-y-4">
                 {/* Mobile Navigation Links */}
                 <motion.button
                   onClick={() => handleLinkClick('#features')}
-                  className="w-full text-left p-4 rounded-2xl bg-gradient-to-r from-pink-50 to-purple-50 
-                           border-2 border-pink-100 hover:border-pink-200 transition-all duration-200
+                  className="w-full text-left p-4 rounded-2xl bg-white 
+                           border border-gray-200 hover:border-gray-300 transition-all duration-200
                            min-h-[60px] flex items-center justify-between touch-manipulation"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center space-x-3">
                     <span className="text-2xl">🎨</span>
-                    <span className="font-bold text-lg text-gray-800">Занятия</span>
+                    <span className="font-bold text-lg text-gray-800">Расписание</span>
                   </div>
                   <span className="text-pink-500">→</span>
                 </motion.button>
 
                 <motion.button
                   onClick={() => handleLinkClick('#pricing')}
-                  className="w-full text-left p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50 
-                           border-2 border-blue-100 hover:border-blue-200 transition-all duration-200
+                  className="w-full text-left p-4 rounded-2xl bg-white 
+                           border border-gray-200 hover:border-gray-300 transition-all duration-200
                            min-h-[60px] flex items-center justify-between touch-manipulation"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -198,8 +195,8 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                 <motion.button
                   onClick={() => handleLinkClick('#contact')}
-                  className="w-full text-left p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50 
-                           border-2 border-purple-100 hover:border-purple-200 transition-all duration-200
+                  className="w-full text-left p-4 rounded-2xl bg-white 
+                           border border-gray-200 hover:border-gray-300 transition-all duration-200
                            min-h-[60px] flex items-center justify-between touch-manipulation"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -217,8 +214,8 @@ export default function Header({ onLoginClick }: HeaderProps) {
                     onLoginClick();
                     closeMobileMenu();
                   }}
-                  className="w-full p-4 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg
-                           shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-white/20
+                  className="w-full p-4 rounded-2xl bg-blue-600 text-white font-bold text-lg
+                           shadow hover:shadow-md transition-all duration-300
                            min-h-[60px] flex items-center justify-center touch-manipulation"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

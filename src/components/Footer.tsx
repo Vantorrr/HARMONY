@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900 text-white py-12 sm:py-16 relative overflow-hidden">
+<footer className="bg-white text-gray-700 py-12 sm:py-16 relative overflow-hidden border-t border-gray-200">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <motion.div

@@ -11,7 +11,7 @@ interface BottomNavigationProps {
 export default function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {
   const tabs = [
     { id: 'home', icon: Home, label: 'Главная' },
-    { id: 'classes', icon: Calendar, label: 'Занятия' },
+    { id: 'classes', icon: Calendar, label: 'Расписание' },
     { id: 'bonuses', icon: Gift, label: 'Бонусы' },
     { id: 'profile', icon: User, label: 'Профиль' }
   ];
@@ -25,8 +25,8 @@ export default function BottomNavigation({ activeTab, onTabChange }: BottomNavig
             onClick={() => onTabChange(tab.id as any)}
             className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-300 min-w-0 flex-1 ${
               activeTab === tab.id
-                ? 'bg-gradient-to-br from-blue-400 to-yellow-400 text-white shadow-lg'
-                : 'text-gray-500 hover:text-blue-500'
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'text-gray-600 hover:text-blue-600'
             }`}
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}

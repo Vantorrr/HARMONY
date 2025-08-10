@@ -307,7 +307,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 relative overflow-hidden">
+  <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Floating Background Elements */}
       {animationData && (
         <div className="absolute inset-0">
@@ -391,7 +391,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-3xl p-6 text-white mb-8 relative overflow-hidden shadow-2xl"
+            className="bg-white rounded-3xl p-6 text-gray-800 mb-8 relative overflow-hidden shadow"
         >
           {/* Background elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
@@ -416,7 +416,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
             {/* Avatar and main info */}
             <div className="flex items-center mb-6">
               <motion.div 
-                className="w-20 h-20 bg-gradient-to-br from-white/30 to-white/10 rounded-full flex items-center justify-center border-4 border-white/30 mr-6 cursor-pointer relative"
+            className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 mr-6 cursor-pointer relative"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -483,7 +483,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
               >
-                📚 Занятия
+                📚 Расписание
               </motion.button>
               <motion.button
                 className={`pb-2 px-3 py-2 mr-4 mb-2 sm:mb-0 sm:mr-0 rounded-lg sm:rounded-none transition-all touch-manipulation min-h-[44px] flex items-center justify-center
@@ -593,7 +593,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                           onClick={() => onShowClassManagement?.()}
                         >
                           <BookOpen size={16} className="mr-1" />
-                          <span className="hidden xs:inline">Занятия</span>
+                          <span className="hidden xs:inline">Расписание</span>
                         </motion.button>
                         
                         <motion.button

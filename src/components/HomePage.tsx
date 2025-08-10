@@ -42,7 +42,7 @@ export default function HomePage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-yellow-400 to-red-400 p-4">
+    <div className="min-h-screen bg-white p-4">
       {/* Заголовок */}
       <motion.div
         className="text-center mb-8 pt-6"
@@ -56,10 +56,8 @@ export default function HomePage({
           transition={{ delay: 0.2, duration: 0.5 }}
           className="relative"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 font-heading tracking-wide relative">
-            <span className="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">
-              ✨ Добро пожаловать! ✨
-            </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 font-heading tracking-wide relative">
+            ✨ Добро пожаловать! ✨
           </h1>
           <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400/20 via-transparent to-yellow-400/20 rounded-2xl blur-lg"></div>
         </motion.div>
@@ -68,7 +66,7 @@ export default function HomePage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-lg text-white font-semibold mb-2"
+          className="text-lg text-gray-800 font-semibold mb-2"
         >
           Привет, <span className="text-yellow-300 font-bold">{userName}</span>! 👋
         </motion.p>
@@ -77,7 +75,7 @@ export default function HomePage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-white/90 text-base font-medium"
+          className="text-gray-600 text-base font-medium"
         >
           🌟 Центр развития ребенка <span className="text-yellow-200 font-bold">"ГАРМОНИЯ"</span> 🌟
         </motion.p>
@@ -88,9 +86,9 @@ export default function HomePage({
           animate={{ width: "auto" }}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <div className="h-1 w-8 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
-          <div className="text-yellow-300">⭐</div>
-          <div className="h-1 w-8 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
+          <div className="h-1 w-8 bg-gray-200 rounded-full"></div>
+          <div className="text-yellow-400">⭐</div>
+          <div className="h-1 w-8 bg-gray-200 rounded-full"></div>
         </motion.div>
       </motion.div>
 
@@ -961,7 +959,7 @@ export default function HomePage({
       >
         <h2 className="text-xl font-bold text-white mb-3">🚀 Быстрые действия</h2>
         
-        {/* Кнопка Занятия */}
+          {/* Кнопка Расписание */}
         <motion.button
           onClick={onShowClassManagement}
           className="w-full bg-white/90 backdrop-blur-sm rounded-2xl p-4 flex items-center justify-between shadow-lg"
@@ -971,8 +969,8 @@ export default function HomePage({
           <div className="flex items-center">
             <div className="text-3xl mr-3">📖</div>
             <div className="text-left">
-              <h3 className="text-lg font-bold text-gray-800">Мои занятия</h3>
-              <p className="text-sm text-gray-600">Расписание и записи</p>
+              <h3 className="text-lg font-bold text-gray-800">Моё расписание</h3>
+              <p className="text-sm text-gray-600">Занятия и записи</p>
             </div>
           </div>
           <div className="text-blue-500 text-xl">→</div>

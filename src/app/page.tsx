@@ -104,7 +104,7 @@ export default function AppPage() {
   // Если пользователь авторизован, показываем соответствующий экран
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-20">
+      <div className="min-h-screen bg-white pb-20">
         {showClassManagement && (
           <ClassManagement onBack={() => handleTabChange('home')} />
         )}
@@ -164,14 +164,9 @@ export default function AppPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-300/20 rounded-full blur-lg"></div>
-        <div className="absolute bottom-32 left-20 w-40 h-40 bg-red-400/15 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-20 right-10 w-20 h-20 bg-white/15 rounded-full blur-lg"></div>
-      </div>
+      <div className="absolute inset-0" />
       
       <div className="text-center relative z-10 px-4">
         <motion.div 
@@ -181,18 +176,16 @@ export default function AppPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <motion.h1 
-            className="text-5xl sm:text-7xl font-black text-white mb-6 font-heading tracking-wider"
+            className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 font-heading tracking-wider"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">
-              ГАРМОНИЯ
-            </span>
+            ГАРМОНИЯ
           </motion.h1>
           
           <motion.p 
-            className="text-xl sm:text-3xl text-white/95 font-bold mb-6"
+            className="text-xl sm:text-3xl text-gray-800 font-bold mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -206,15 +199,15 @@ export default function AppPage() {
             animate={{ width: "auto" }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
-            <div className="text-yellow-300 text-2xl">✨</div>
-            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-yellow-300 to-transparent rounded-full"></div>
+            <div className="h-1 w-20 bg-gray-200 rounded-full"></div>
+            <div className="text-yellow-400 text-2xl">✨</div>
+            <div className="h-1 w-20 bg-gray-200 rounded-full"></div>
           </motion.div>
         </motion.div>
         
-        <motion.button
+          <motion.button
           onClick={handleLoginClick}
-          className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 text-blue-900 font-black text-xl sm:text-2xl px-12 sm:px-16 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-yellow-400/50 transform hover:scale-110 transition-all duration-300 border-4 border-white/30 hover:border-white/60"
+            className="bg-blue-600 text-white font-bold text-xl sm:text-2xl px-12 sm:px-16 py-4 sm:py-5 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
@@ -229,8 +222,8 @@ export default function AppPage() {
           </span>
         </motion.button>
         
-        <motion.p 
-          className="text-white/80 text-sm mt-6 font-medium"
+          <motion.p 
+            className="text-gray-500 text-sm mt-6 font-medium"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}

@@ -63,9 +63,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Мои занятия",
-      "short_name": "Занятия",
-      "description": "Посмотреть расписание тренировок",
+      "name": "Моё расписание",
+      "short_name": "Расписание",
+      "description": "Посмотреть расписание занятий",
       "url": "/#classes",
       "icons": [{ "src": "/icon-classes.png", "sizes": "96x96" }]
     },

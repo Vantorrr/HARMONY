@@ -361,21 +361,21 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
 
       {/* Header */}
       <motion.header 
-        className="relative z-10 bg-white/10 backdrop-blur-md border-b border-white/20"
+        className="relative z-10 bg-white border-b border-gray-200"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <motion.h1 
-              className="text-2xl font-heading font-bold text-white"
+              className="text-2xl font-heading font-bold text-gray-900"
               whileHover={{ scale: 1.05 }}
             >
               ✨ Личный кабинет
             </motion.h1>
             <motion.button
               onClick={handleLogout}
-              className="flex items-center text-white/80 hover:text-white transition-colors bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm"
+              className="flex items-center text-gray-700 hover:text-gray-900 transition-colors bg-white px-4 py-2 rounded-full border border-gray-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -405,7 +405,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
               </div>
               <motion.button
                 onClick={handleLogout}
-                className="text-white/80 hover:text-white text-sm bg-white/10 px-3 py-1 rounded-full"
+                className="text-gray-700 hover:text-gray-900 text-sm bg-white px-3 py-1 rounded-full border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -435,7 +435,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                   <h2 className="text-2xl font-heading font-bold">{userData.name}</h2>
                   <motion.button
                     onClick={() => setShowNameEditor(true)}
-                    className="text-white/80 hover:text-white p-1 rounded-full hover:bg-white/10"
+                    className="text-gray-600 hover:text-gray-900 p-1 rounded-full hover:bg-gray-100"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -444,7 +444,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
                 </div>
                 <div className="flex items-center mb-2">
                   <Crown className="w-4 h-4 text-yellow-300 mr-2" />
-                  <span className="text-white/90 font-medium">Level {userData.level}</span>
+                  <span className="text-gray-700 font-medium">Level {userData.level}</span>
                 </div>
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
@@ -466,8 +466,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
               <motion.button
                 className={`pb-2 px-3 py-2 mr-4 mb-2 sm:mb-0 sm:mr-0 rounded-lg sm:rounded-none transition-all touch-manipulation min-h-[44px] flex items-center justify-center
                   ${currentTab === 'children' 
-                    ? 'text-white border-b-2 border-white bg-white/10 sm:bg-transparent' 
-                    : 'text-white/70 hover:text-white/90 bg-white/5 hover:bg-white/10 sm:bg-transparent'}`}
+                    ? 'text-blue-700 border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-gray-900'}`}
                 onClick={() => setCurrentTab('children')}
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
@@ -477,8 +477,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
               <motion.button
                 className={`pb-2 px-3 py-2 mr-4 mb-2 sm:mb-0 sm:mr-0 rounded-lg sm:rounded-none transition-all touch-manipulation min-h-[44px] flex items-center justify-center
                   ${currentTab === 'classes' 
-                    ? 'text-white border-b-2 border-white bg-white/10 sm:bg-transparent' 
-                    : 'text-white/70 hover:text-white/90 bg-white/5 hover:bg-white/10 sm:bg-transparent'}`}
+                    ? 'text-blue-700 border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-gray-900'}`}
                 onClick={() => setCurrentTab('classes')}
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
@@ -488,8 +488,8 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
               <motion.button
                 className={`pb-2 px-3 py-2 mr-4 mb-2 sm:mb-0 sm:mr-0 rounded-lg sm:rounded-none transition-all touch-manipulation min-h-[44px] flex items-center justify-center
                   ${currentTab === 'bonuses' 
-                    ? 'text-white border-b-2 border-white bg-white/10 sm:bg-transparent' 
-                    : 'text-white/70 hover:text-white/90 bg-white/5 hover:bg-white/10 sm:bg-transparent'}`}
+                    ? 'text-blue-700 border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-gray-900'}`}
                 onClick={() => setCurrentTab('bonuses')}
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}

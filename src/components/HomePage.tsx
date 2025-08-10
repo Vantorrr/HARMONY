@@ -235,7 +235,7 @@ export default function HomePage({
               Подготовка к школе
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
@@ -511,7 +511,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
@@ -519,7 +519,7 @@ export default function HomePage({
               Математика
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
@@ -582,7 +582,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
@@ -590,7 +590,7 @@ export default function HomePage({
               Массаж
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3 }}
@@ -653,7 +653,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3 }}
@@ -661,7 +661,7 @@ export default function HomePage({
               Продлёнка
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4 }}
@@ -724,7 +724,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4 }}
@@ -732,7 +732,7 @@ export default function HomePage({
               Мастерская
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5 }}
@@ -795,7 +795,7 @@ export default function HomePage({
               </motion.div>
             </motion.div>
             <motion.h3 
-              className="text-white text-sm font-bold mb-1"
+              className="text-gray-900 text-sm font-bold mb-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5 }}
@@ -803,7 +803,7 @@ export default function HomePage({
               Рисование
             </motion.h3>
             <motion.p 
-              className="text-white/80 text-xs"
+              className="text-gray-600 text-xs"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6 }}
@@ -941,15 +941,15 @@ export default function HomePage({
 
       {/* Статистика */}
       <motion.div 
-        className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 mb-4"
+        className="bg-white rounded-3xl p-4 mb-4 shadow"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.6 }}
       >
         <div className="text-center">
-          <p className="text-white text-sm mb-1">💰 Ваши бонусы</p>
-          <p className="text-2xl font-bold text-white">{userBonusPoints}</p>
-          <p className="text-white/80 text-xs">баллов</p>
+          <p className="text-gray-600 text-sm mb-1">💰 Ваши бонусы</p>
+          <p className="text-2xl font-bold text-gray-900">{userBonusPoints}</p>
+          <p className="text-gray-500 text-xs">баллов</p>
         </div>
       </motion.div>
 
@@ -960,7 +960,7 @@ export default function HomePage({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
       >
-        <h2 className="text-xl font-bold text-white mb-3">🚀 Быстрые действия</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-3">🚀 Быстрые действия</h2>
         
           {/* Кнопка Расписание */}
         <motion.button

@@ -307,7 +307,7 @@ export default function ProfilePage({ onLogout, onShowClassManagement, onShowLoy
   ];
 
   return (
-  <div className="min-h-screen bg-white relative overflow-hidden">
+  <div className="min-h-screen bg-teal-50 relative overflow-hidden">
       {/* Floating Background Elements */}
       {animationData && (
         <div className="absolute inset-0">

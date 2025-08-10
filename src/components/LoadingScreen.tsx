@@ -80,7 +80,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
   return (
     <AnimatePresence>
       <motion.div
-  className="fixed inset-0 z-50 flex items-center justify-center bg-white overflow-hidden"
+  className="fixed inset-0 z-50 flex items-center justify-center bg-teal-50 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ 

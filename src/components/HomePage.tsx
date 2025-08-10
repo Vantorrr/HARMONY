@@ -42,7 +42,7 @@ export default function HomePage({
   };
 
   return (
-    <div className="min-h-screen bg-white p-4">
+    <div className="min-h-screen bg-teal-50 p-4">
       {/* Заголовок */}
       <motion.div
         className="text-center mb-8 pt-6"

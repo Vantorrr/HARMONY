@@ -104,7 +104,7 @@ export default function AppPage() {
   // Если пользователь авторизован, показываем соответствующий экран
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white pb-20">
+      <div className="min-h-screen bg-teal-50 pb-20">
         {showClassManagement && (
           <ClassManagement onBack={() => handleTabChange('home')} />
         )}
@@ -164,7 +164,7 @@ export default function AppPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-teal-50 flex items-center justify-center relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0" />
       

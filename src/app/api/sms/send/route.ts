@@ -52,8 +52,8 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           phones: phone,
           mes: text,
           fmt: '3', // JSON формат ответа
-          charset: 'utf-8',
-          sender: process.env.SMSC_SENDER || ''
+          charset: 'utf-8'
+          // Убираем sender - будет использоваться стандартный
         })
       });
 

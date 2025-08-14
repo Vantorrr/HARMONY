@@ -234,6 +234,17 @@ export default function AppPage() {
         >
           Добро пожаловать в мир развития! 🌟
         </motion.p>
+
+        {/* Реквизиты компании (требование платежных систем) */}
+        <div className="mt-8 text-xs text-gray-500">
+          <div className="inline-flex flex-col sm:flex-row sm:items-center sm:justify-center gap-1 sm:gap-3 bg-white/80 backdrop-blur-md rounded-lg px-3 py-2 border border-gray-200">
+            <span>ИП Золочевская Дарья Николаевна</span>
+            <span className="hidden sm:inline">•</span>
+            <span>ИНН: 432403568907</span>
+            <span className="hidden sm:inline">•</span>
+            <span>ОГРНИП: 325774600435896</span>
+          </div>
+        </div>
       </div>
       
       <AuthModal

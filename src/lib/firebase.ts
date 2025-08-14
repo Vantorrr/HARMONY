@@ -1,5 +1,6 @@
 // Firebase Configuration for Harmony Fitness
 import { initializeApp, getApps } from 'firebase/app';
+import { getAnalytics, isSupported as isAnalyticsSupported, type Analytics } from 'firebase/analytics';
 import { getMessaging, getToken, onMessage, type Messaging } from 'firebase/messaging';
 
 // Firebase config (используем env, а при отсутствии — реальные ключи, переданные заказчиком)
@@ -30,6 +31,7 @@ if (getApps().length === 0) {
 }
 
 let messaging: Messaging | null = null;
+let analytics: Analytics | null = null;
 
 // Инициализация Messaging (только в браузере)
 export const initializeMessaging = () => {
@@ -93,6 +95,22 @@ export const getMessagingToken = async (): Promise<string | null> => {
     }
   } catch (error) {
     console.error('An error occurred while retrieving token:', error);
+    return null;
+  }
+};
+
+// Инициализация Firebase Analytics (только в браузере и если поддерживается)
+export const initializeAnalytics = async (): Promise<Analytics | null> => {
+  try {
+    if (typeof window === 'undefined') return null;
+    const supported = await isAnalyticsSupported();
+    if (!supported) return null;
+    if (!analytics) {
+      analytics = getAnalytics(app);
+    }
+    return analytics;
+  } catch (error) {
+    console.warn('Analytics not available:', error);
     return null;
   }
 };
@@ -207,4 +225,4 @@ export const showLocalNotification = (payload: NotificationPayload) => {
   }
 };
 
-export { app, messaging };
+export { app, messaging, analytics };

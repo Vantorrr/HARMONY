@@ -6,6 +6,7 @@ import AuthModal from '@/components/AuthModal';
 import ProfilePage from '@/components/ProfilePage';
 import ClassManagement from '@/components/ClassManagement';
 import LoyaltyProgram from '@/components/LoyaltyProgram';
+import TeachersDirectory from '@/components/TeachersDirectory';
 import LoadingScreen from '@/components/LoadingScreen';
 import BottomNavigation from '@/components/BottomNavigation';
 import HomePage from '@/components/HomePage';
@@ -43,7 +44,7 @@ export default function AppPage() {
       }
     }
   }, [userBonusPoints, isAuthenticated]);
-  const [activeTab, setActiveTab] = useState<'home' | 'classes' | 'bonuses' | 'profile'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'classes' | 'teachers' | 'profile'>('home');
 
   // Инициализация автоматических уведомлений
   const { isEnabled: notificationsEnabled } = useAutoNotifications({
@@ -80,7 +81,7 @@ export default function AppPage() {
     setActiveTab('home');
   };
 
-  const handleTabChange = (tab: 'home' | 'classes' | 'bonuses' | 'profile') => {
+  const handleTabChange = (tab: 'home' | 'classes' | 'teachers' | 'profile') => {
     setActiveTab(tab);
     
     // Сброс других состояний
@@ -91,8 +92,8 @@ export default function AppPage() {
     // Переключение на соответствующие экраны
     if (tab === 'classes') {
       setShowClassManagement(true);
-    } else if (tab === 'bonuses') {
-      setShowLoyaltyProgram(true);
+    } else if (tab === 'teachers') {
+      // показываем каталог преподавателей
     }
     // home и profile обрабатываются в render логике
   };
@@ -133,15 +134,18 @@ export default function AppPage() {
             userName="Родитель"
             userBonusPoints={userBonusPoints}
             onShowClassManagement={() => handleTabChange('classes')}
-            onShowLoyaltyProgram={() => handleTabChange('bonuses')}
+            onShowLoyaltyProgram={() => handleTabChange('teachers')}
             onShowSubscriptions={() => setShowSubscriptions(true)}
           />
+        )}
+        {!showClassManagement && !showLoyaltyProgram && activeTab === 'teachers' && (
+          <TeachersDirectory />
         )}
         {!showClassManagement && !showLoyaltyProgram && activeTab === 'profile' && (
           <ProfilePage 
             onLogout={handleLogout} 
             onShowClassManagement={() => handleTabChange('classes')}
-            onShowLoyaltyProgram={() => handleTabChange('bonuses')}
+            onShowLoyaltyProgram={() => handleTabChange('teachers')}
           />
         )}
         

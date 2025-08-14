@@ -1,18 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Home, Calendar, Gift, User } from 'lucide-react';
+import { Home, Calendar, Users, User } from 'lucide-react';
 
 interface BottomNavigationProps {
-  activeTab: 'home' | 'classes' | 'bonuses' | 'profile';
-  onTabChange: (tab: 'home' | 'classes' | 'bonuses' | 'profile') => void;
+  activeTab: 'home' | 'classes' | 'teachers' | 'profile';
+  onTabChange: (tab: 'home' | 'classes' | 'teachers' | 'profile') => void;
 }
 
 export default function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {
   const tabs = [
     { id: 'home', icon: Home, label: 'Главная' },
     { id: 'classes', icon: Calendar, label: 'Расписание' },
-    { id: 'bonuses', icon: Gift, label: 'Бонусы' },
+    { id: 'teachers', icon: Users, label: 'Преподаватели' },
     { id: 'profile', icon: User, label: 'Профиль' }
   ];
 

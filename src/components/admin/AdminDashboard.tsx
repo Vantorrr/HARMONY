@@ -29,6 +29,7 @@ import ActivityLog from './ActivityLog';
 import AdminStats from './AdminStats';
 import NotificationAdmin from './NotificationAdmin';
 import BannersAdmin from './BannersAdmin';
+import TeachersAdmin from './TeachersAdmin';
 
 interface AdminDashboardProps {
   adminUser: any;
@@ -46,6 +47,12 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
       name: 'Статистика',
       icon: <TrendingUp className="w-5 h-5" />,
       permission: ['all', 'reports']
+    },
+    {
+      id: 'teachers',
+      name: 'Преподаватели',
+      icon: <Users className="w-5 h-5" />,
+      permission: ['all', 'content']
     },
     {
       id: 'clients',
@@ -222,6 +229,7 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
               </div>
             )}
             {activeTab === 'banners' && <BannersAdmin />}
+            {activeTab === 'teachers' && <TeachersAdmin />}
             {activeTab === 'notifications' && <NotificationAdmin adminUser={adminUser} />}
             {activeTab === 'activity' && <ActivityLog adminUser={adminUser} />}
           </>

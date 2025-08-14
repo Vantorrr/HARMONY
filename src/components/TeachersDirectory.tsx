@@ -26,12 +26,23 @@ const TeacherCard = ({ name, photo, subtitle }: TeacherCardProps) => (
 );
 
 export default function TeachersDirectory() {
-  const placeholders: TeacherCardProps[] = [
-    { name: 'Иван Петров', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-    { name: 'Елена Волкова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-    { name: 'Мария Смирнова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-    { name: 'Дмитрий Новиков', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-  ];
+  const placeholders: TeacherCardProps[] = (() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('harmony_teachers');
+        if (saved) {
+          const parsed = JSON.parse(saved) as any[];
+          return parsed.map(t => ({ name: t.name, photo: t.photo || '/images/logo/logo.png', subtitle: t.subtitle || 'Преподаватель' }));
+        }
+      } catch {}
+    }
+    return [
+      { name: 'Иван Петров', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+      { name: 'Елена Волкова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+      { name: 'Мария Смирнова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+      { name: 'Дмитрий Новиков', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+    ];
+  })();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

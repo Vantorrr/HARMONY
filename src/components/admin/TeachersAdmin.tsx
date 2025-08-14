@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit3, Upload } from 'lucide-react';
+import { db, storage } from '@/lib/firebase';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 
 interface Teacher {
   id: string;
@@ -20,26 +23,60 @@ export default function TeachersAdmin() {
   const [photo, setPhoto] = useState<string>('');
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_KEY);
-    if (saved) {
-      try { setTeachers(JSON.parse(saved)); } catch {}
-    }
+    const load = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'teachers'));
+        if (!snap.empty) {
+          const list: Teacher[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
+          setTeachers(list);
+          return;
+        }
+      } catch (e) {
+        // fallback to localStorage
+        const saved = localStorage.getItem(LOCAL_KEY);
+        if (saved) {
+          try { setTeachers(JSON.parse(saved)); } catch {}
+        }
+      }
+    };
+    load();
   }, []);
 
-  const persist = (list: Teacher[]) => {
+  const persistLocal = (list: Teacher[]) => {
     setTeachers(list);
     localStorage.setItem(LOCAL_KEY, JSON.stringify(list));
   };
 
-  const addTeacher = () => {
+  const addTeacher = async () => {
     if (!name.trim()) return;
-    const t: Teacher = { id: crypto.randomUUID(), name: name.trim(), subtitle: subtitle.trim(), photo: photo || '/images/logo/logo.png' };
-    persist([t, ...teachers]);
+    try {
+      let photoUrl = photo;
+      if (photo && photo.startsWith('data:')) {
+        const storageRef = ref(storage, `teachers/${Date.now()}.jpg`);
+        await uploadString(storageRef, photo, 'data_url');
+        photoUrl = await getDownloadURL(storageRef);
+      }
+      const docRef = await addDoc(collection(db, 'teachers'), {
+        name: name.trim(),
+        subtitle: subtitle.trim(),
+        photo: photoUrl || '/images/logo/logo.png'
+      });
+      setTeachers([{ id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: photoUrl || '/images/logo/logo.png' }, ...teachers]);
+    } catch (e) {
+      // fallback local
+      const t: Teacher = { id: crypto.randomUUID(), name: name.trim(), subtitle: subtitle.trim(), photo: photo || '/images/logo/logo.png' };
+      persistLocal([t, ...teachers]);
+    }
     setName(''); setSubtitle('Преподаватель'); setPhoto('');
   };
 
-  const removeTeacher = (id: string) => {
-    persist(teachers.filter(t => t.id !== id));
+  const removeTeacher = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, 'teachers', id));
+      setTeachers(teachers.filter(t => t.id !== id));
+    } catch (e) {
+      persistLocal(teachers.filter(t => t.id !== id));
+    }
   };
 
   const onPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {

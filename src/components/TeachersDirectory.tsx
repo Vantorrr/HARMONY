@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { motion } from 'framer-motion';
 
 interface TeacherCardProps {
@@ -26,23 +28,46 @@ const TeacherCard = ({ name, photo, subtitle }: TeacherCardProps) => (
 );
 
 export default function TeachersDirectory() {
-  const placeholders: TeacherCardProps[] = (() => {
-    if (typeof window !== 'undefined') {
+  const [teachers, setTeachers] = useState<TeacherCardProps[] | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        // сначала пробуем Firestore
+        const snap = await getDocs(collection(db, 'teachers'));
+        if (!snap.empty) {
+          const list: TeacherCardProps[] = snap.docs.map(d => {
+            const data = d.data() as any;
+            return {
+              name: data.name || 'Без имени',
+              photo: data.photo || '/images/logo/logo.png',
+              subtitle: data.subtitle || 'Преподаватель'
+            };
+          });
+          setTeachers(list);
+          return;
+        }
+      } catch (e) {
+        console.warn('Teachers Firestore fetch failed, fallback to localStorage', e);
+      }
+      // fallback: localStorage или заглушки
       try {
         const saved = localStorage.getItem('harmony_teachers');
         if (saved) {
           const parsed = JSON.parse(saved) as any[];
-          return parsed.map(t => ({ name: t.name, photo: t.photo || '/images/logo/logo.png', subtitle: t.subtitle || 'Преподаватель' }));
+          setTeachers(parsed.map(t => ({ name: t.name, photo: t.photo || '/images/logo/logo.png', subtitle: t.subtitle || 'Преподаватель' })));
+          return;
         }
       } catch {}
-    }
-    return [
-      { name: 'Иван Петров', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-      { name: 'Елена Волкова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-      { name: 'Мария Смирнова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-      { name: 'Дмитрий Новиков', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-    ];
-  })();
+      setTeachers([
+        { name: 'Иван Петров', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+        { name: 'Елена Волкова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+        { name: 'Мария Смирнова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+        { name: 'Дмитрий Новиков', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
+      ]);
+    };
+    load();
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -50,7 +75,7 @@ export default function TeachersDirectory() {
       <p className="text-gray-600 mb-6">Скоро здесь появятся реальные фото и описания. Заполните их в админ‑панели.</p>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {placeholders.map((t, idx) => (
+        {(teachers || []).map((t, idx) => (
           <TeacherCard key={idx} {...t} />
         ))}
       </div>

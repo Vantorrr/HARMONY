@@ -2,6 +2,8 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getAnalytics, isSupported as isAnalyticsSupported, type Analytics } from 'firebase/analytics';
 import { getMessaging, getToken, onMessage, type Messaging } from 'firebase/messaging';
+import { getFirestore, type Firestore } from 'firebase/firestore';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase config (используем env, а при отсутствии — реальные ключи, переданные заказчиком)
 const firebaseConfig = {
@@ -32,6 +34,8 @@ if (getApps().length === 0) {
 
 let messaging: Messaging | null = null;
 let analytics: Analytics | null = null;
+const db: Firestore = getFirestore(app);
+const storage: FirebaseStorage = getStorage(app);
 
 // Инициализация Messaging (только в браузере)
 export const initializeMessaging = () => {
@@ -225,4 +229,4 @@ export const showLocalNotification = (payload: NotificationPayload) => {
   }
 };
 
-export { app, messaging, analytics };
+export { app, messaging, analytics, db, storage };

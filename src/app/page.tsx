@@ -148,6 +148,20 @@ export default function AppPage() {
             onShowLoyaltyProgram={() => handleTabChange('teachers')}
           />
         )}
+
+        {/* Краткие реквизиты внизу (после авторизации) */}
+        <div className="px-4 mt-2 mb-3">
+          <div className="text-center text-[11px] sm:text-xs text-gray-500">
+            <div className="inline-flex flex-col sm:flex-row sm:items-center sm:justify-center gap-1 sm:gap-2 bg-white/80 rounded-lg px-3 py-2 border border-gray-200">
+              <span>ИП Золочевская Дарья Николаевна</span>
+              <span className="hidden sm:inline">•</span>
+              <span>ИНН 432403568907</span>
+              <span className="hidden sm:inline">•</span>
+              <span>ОГРНИП 325774600435896</span>
+              <a href="/legal/requisites" className="hidden sm:inline text-blue-600 hover:underline">Подробнее</a>
+            </div>
+          </div>
+        </div>
         
         <BottomNavigation 
           activeTab={activeTab}

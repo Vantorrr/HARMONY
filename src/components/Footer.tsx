@@ -145,11 +145,11 @@ export default function Footer() {
                 💰 Цены и абонементы
               </motion.a>
               <motion.a 
-                href="#" 
+                href="/legal/requisites" 
                 className="block text-white/80 hover:text-white transition-colors"
                 whileHover={{ scale: 1.02, x: 5 }}
               >
-                📄 Политика конфиденциальности
+                📄 Реквизиты компании
               </motion.a>
               <motion.a 
                 href="#" 

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { motion } from 'framer-motion';
 
@@ -29,45 +29,60 @@ const TeacherCard = ({ name, photo, subtitle }: TeacherCardProps) => (
 );
 
 export default function TeachersDirectory() {
-  const [teachers, setTeachers] = useState<TeacherCardProps[] | null>(null);
+  const [teachers, setTeachers] = useState<TeacherCardProps[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        // сначала пробуем Firestore
-        const snap = await getDocs(collection(db, 'teachers'));
-        if (!snap.empty) {
-          const list: TeacherCardProps[] = snap.docs.map(d => {
-            const data = d.data() as any;
-            return {
-              name: data.name || 'Без имени',
-              photo: data.photo || '/images/logo/logo.png',
-              subtitle: data.subtitle || 'Преподаватель'
-            };
-          });
-          setTeachers(list);
-          return;
-        }
-      } catch (e) {
-        console.warn('Teachers Firestore fetch failed, fallback to localStorage', e);
-      }
-      // fallback: localStorage или заглушки
+    // Сначала проверяем localStorage (быстро)
+    const loadLocal = () => {
       try {
         const saved = localStorage.getItem('harmony_teachers');
         if (saved) {
           const parsed = JSON.parse(saved) as any[];
-          setTeachers(parsed.map(t => ({ name: t.name, photo: t.photo || '/images/logo/logo.png', subtitle: t.subtitle || 'Преподаватель' })));
-          return;
+          const list = parsed.map(t => ({ 
+            name: t.name, 
+            photo: t.photo || '/images/logo/logo.png', 
+            subtitle: t.subtitle || 'Преподаватель' 
+          }));
+          setTeachers(list);
+          setLoading(false);
+          return list.length > 0;
         }
       } catch {}
-      setTeachers([
-        { name: 'Иван Петров', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-        { name: 'Елена Волкова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-        { name: 'Мария Смирнова', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-        { name: 'Дмитрий Новиков', photo: '/images/logo/logo.png', subtitle: 'Преподаватель' },
-      ]);
+      return false;
     };
-    load();
+
+    // Загружаем локальные данные сразу
+    const hasLocal = loadLocal();
+
+    // Затем пробуем Firestore (в фоне)
+    try {
+      const unsub = onSnapshot(collection(db, 'teachers'), (snap) => {
+        const list: TeacherCardProps[] = snap.docs.map(d => {
+          const data = d.data() as any;
+          return {
+            name: data.name || 'Без имени',
+            photo: data.photo || '/images/logo/logo.png',
+            subtitle: data.subtitle || 'Преподаватель'
+          };
+        });
+        setTeachers(list);
+        setLoading(false);
+      }, (err) => {
+        console.warn('Teachers Firestore failed:', err);
+        if (!hasLocal) {
+          setTeachers([]);
+        }
+        setLoading(false);
+      });
+      return () => unsub();
+    } catch (e) {
+      console.warn('Firestore init failed:', e);
+      if (!hasLocal) {
+        setTeachers([]);
+      }
+      setLoading(false);
+    }
   }, []);
 
   return (
@@ -75,11 +90,21 @@ export default function TeachersDirectory() {
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Преподаватели</h2>
       <p className="text-gray-600 mb-6">Скоро здесь появятся реальные фото и описания. Заполните их в админ‑панели.</p>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {(teachers || []).map((t, idx) => (
-          <TeacherCard key={idx} {...t} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="text-gray-500 text-sm bg-white border border-gray-200 rounded-xl p-4">
+          Загрузка преподавателей...
+        </div>
+      ) : teachers.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {teachers.map((t, idx) => (
+            <TeacherCard key={idx} {...t} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-gray-500 text-sm bg-white border border-gray-200 rounded-xl p-4">
+          Преподаватели ещё не добавлены. Добавьте их в админ‑панели, и они появятся здесь автоматически.
+        </div>
+      )}
     </div>
   );
 }

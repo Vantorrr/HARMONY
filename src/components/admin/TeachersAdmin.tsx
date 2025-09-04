@@ -66,7 +66,11 @@ export default function TeachersAdmin() {
         subtitle: subtitle.trim(),
         photo: photoUrl || '/images/logo/logo.png'
       });
-      setTeachers([{ id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: photoUrl || '/images/logo/logo.png' }, ...teachers]);
+      const newTeacher = { id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: photoUrl || '/images/logo/logo.png' };
+      const updatedList = [newTeacher, ...teachers];
+      setTeachers(updatedList);
+      // Дублируем в localStorage для быстрого доступа
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(updatedList));
       alert('Преподаватель добавлен');
     } catch (e) {
       // fallback local
@@ -81,7 +85,10 @@ export default function TeachersAdmin() {
   const removeTeacher = async (id: string) => {
     try {
       await deleteDoc(doc(db, 'teachers', id));
-      setTeachers(teachers.filter(t => t.id !== id));
+      const updatedList = teachers.filter(t => t.id !== id);
+      setTeachers(updatedList);
+      // Синхронизируем localStorage
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(updatedList));
     } catch (e) {
       persistLocal(teachers.filter(t => t.id !== id));
     }

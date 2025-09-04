@@ -21,6 +21,7 @@ export default function TeachersAdmin() {
   const [name, setName] = useState('');
   const [subtitle, setSubtitle] = useState('Преподаватель');
   const [photo, setPhoto] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -48,7 +49,11 @@ export default function TeachersAdmin() {
   };
 
   const addTeacher = async () => {
-    if (!name.trim()) return;
+    if (!name.trim()) {
+      alert('Введите ФИО преподавателя');
+      return;
+    }
+    setIsSaving(true);
     try {
       let photoUrl = photo;
       if (photo && photo.startsWith('data:')) {
@@ -62,12 +67,15 @@ export default function TeachersAdmin() {
         photo: photoUrl || '/images/logo/logo.png'
       });
       setTeachers([{ id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: photoUrl || '/images/logo/logo.png' }, ...teachers]);
+      alert('Преподаватель добавлен');
     } catch (e) {
       // fallback local
       const t: Teacher = { id: crypto.randomUUID(), name: name.trim(), subtitle: subtitle.trim(), photo: photo || '/images/logo/logo.png' };
       persistLocal([t, ...teachers]);
+      alert('Сохранено локально (без Firestore). Проверьте настройки Firebase правил.');
     }
     setName(''); setSubtitle('Преподаватель'); setPhoto('');
+    setIsSaving(false);
   };
 
   const removeTeacher = async (id: string) => {
@@ -100,8 +108,8 @@ export default function TeachersAdmin() {
             <Upload className="w-4 h-4" /> Фото
             <input type="file" accept="image/*" className="hidden" onChange={onPhotoChange} />
           </label>
-          <button onClick={addTeacher} className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center gap-2">
-            <Plus className="w-4 h-4" /> Добавить
+          <button onClick={addTeacher} disabled={!name.trim() || isSaving} className={`px-4 py-2 rounded-lg flex items-center gap-2 ${(!name.trim() || isSaving) ? 'bg-blue-300 text-white cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
+            <Plus className="w-4 h-4" /> {isSaving ? 'Сохранение...' : 'Добавить'}
           </button>
         </div>
       </div>

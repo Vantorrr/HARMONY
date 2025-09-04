@@ -33,8 +33,8 @@ export default function TeachersDirectory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Сначала проверяем localStorage (быстро)
-    const loadLocal = () => {
+    // Читаем только из localStorage (быстро и надёжно)
+    const loadTeachers = () => {
       try {
         const saved = localStorage.getItem('harmony_teachers');
         if (saved) {
@@ -45,44 +45,26 @@ export default function TeachersDirectory() {
             subtitle: t.subtitle || 'Преподаватель' 
           }));
           setTeachers(list);
-          setLoading(false);
-          return list.length > 0;
-        }
-      } catch {}
-      return false;
-    };
-
-    // Загружаем локальные данные сразу
-    const hasLocal = loadLocal();
-
-    // Затем пробуем Firestore (в фоне)
-    try {
-      const unsub = onSnapshot(collection(db, 'teachers'), (snap) => {
-        const list: TeacherCardProps[] = snap.docs.map(d => {
-          const data = d.data() as any;
-          return {
-            name: data.name || 'Без имени',
-            photo: data.photo || '/images/logo/logo.png',
-            subtitle: data.subtitle || 'Преподаватель'
-          };
-        });
-        setTeachers(list);
-        setLoading(false);
-      }, (err) => {
-        console.warn('Teachers Firestore failed:', err);
-        if (!hasLocal) {
+        } else {
           setTeachers([]);
         }
-        setLoading(false);
-      });
-      return () => unsub();
-    } catch (e) {
-      console.warn('Firestore init failed:', e);
-      if (!hasLocal) {
+      } catch {
         setTeachers([]);
       }
       setLoading(false);
-    }
+    };
+
+    loadTeachers();
+
+    // Слушаем изменения localStorage (для синхронизации между вкладками)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'harmony_teachers') {
+        loadTeachers();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   return (

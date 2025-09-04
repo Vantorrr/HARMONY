@@ -14,6 +14,12 @@ interface PaymentRequest {
   userId: string;
   returnUrl: string;
   metadata?: Record<string, any>;
+  customer?: {
+    email?: string;
+    phone?: string; // в формате 7XXXXXXXXXX
+  };
+  taxSystemCode?: number; // 1..6
+  vatCode?: number; // 1..6 (6 — без НДС)
 }
 
 interface YuKassaPaymentResponse {
@@ -77,7 +83,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Создание платежа через YuKassa API
-    const paymentData = {
+    const taxSystemCode = body.taxSystemCode || Number(process.env.YUKASSA_TAX_SYSTEM_CODE) || 2; // по умолчанию УСН доход
+    const vatCode = body.vatCode || Number(process.env.YUKASSA_VAT_CODE) || 6; // по умолчанию без НДС
+
+    const paymentData: any = {
       amount: {
         value: body.amount.toFixed(2),
         currency: 'RUB'
@@ -92,7 +101,24 @@ export async function POST(request: NextRequest) {
         userId: body.userId,
         ...body.metadata
       },
-      capture: true
+      capture: true,
+      receipt: {
+        customer: {
+          ...(body.customer?.email ? { email: body.customer.email } : {}),
+          ...(body.customer?.phone ? { phone: body.customer.phone } : {})
+        },
+        items: [
+          {
+            description: body.description?.slice(0, 128) || 'Оплата',
+            quantity: '1.0',
+            amount: { value: body.amount.toFixed(2), currency: 'RUB' },
+            vat_code: vatCode,
+            payment_mode: 'full_prepayment',
+            payment_subject: 'service'
+          }
+        ],
+        tax_system_code: taxSystemCode
+      }
     };
 
     // Создание Basic Auth заголовка

@@ -81,6 +81,53 @@ export default function AppPage() {
     setActiveTab('home');
   };
 
+  // Создание платежа и редирект на ЮKassa
+  const createPaymentAndRedirect = async (sub: any) => {
+    try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      let phone: string | undefined;
+      try {
+        const authRaw = localStorage.getItem('harmony_auth');
+        if (authRaw) {
+          const auth = JSON.parse(authRaw);
+          phone = auth.phone as string | undefined;
+          if (phone) {
+            const digits = phone.replace(/\D/g, '');
+            if (digits.startsWith('8')) phone = '7' + digits.slice(1);
+            else if (digits.startsWith('7')) phone = digits;
+            else if (digits.startsWith('9') && digits.length === 10) phone = '7' + digits; // 9XXXXXXXXX -> 7XXXXXXXXXX
+          }
+        }
+      } catch {}
+
+      const body: any = {
+        amount: sub.price,
+        description: sub.name,
+        subscriptionId: sub.id,
+        userId: 'current_user',
+        returnUrl: origin ? `${origin}/#profile` : 'http://localhost:3000/#profile',
+      };
+      if (phone) body.customer = { phone };
+
+      const res = await fetch('/api/payments/yukassa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (!res.ok || !data?.success) throw new Error(data?.error || 'Payment error');
+      const url: string | undefined = data?.payment?.confirmation?.confirmation_url;
+      if (url) {
+        window.location.href = url;
+      } else {
+        alert('Не удалось получить ссылку на оплату');
+      }
+    } catch (e: any) {
+      console.error('Create payment failed', e);
+      alert('Ошибка создания платежа. Попробуйте позже.');
+    }
+  };
+
   const handleTabChange = (tab: 'home' | 'classes' | 'teachers' | 'profile') => {
     setActiveTab(tab);
     
@@ -119,9 +166,8 @@ export default function AppPage() {
         {showSubscriptions && (
           <SubscriptionShop 
             onPurchase={(sub) => {
-              alert(`Абонемент "${sub.name}" выбран! Переход к оплате...`);
-              setShowSubscriptions(false);
-              handleTabChange('home');
+              // Оставляем окно открытым до редиректа
+              createPaymentAndRedirect(sub);
             }}
             onClose={() => {
               setShowSubscriptions(false);

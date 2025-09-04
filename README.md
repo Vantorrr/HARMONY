@@ -6,6 +6,9 @@
 ![Status](https://img.shields.io/badge/Status-Ready%20to%20Use-brightgreen)
 ![Platform](https://img.shields.io/badge/Platform-Next.js-blue)
 ![Mobile](https://img.shields.io/badge/Mobile-Adaptive-success)
+---
+
+**Разработано командой [N0FACE Digital](https://noface.digital).**
 
 ---
 

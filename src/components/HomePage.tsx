@@ -1016,20 +1016,8 @@ export default function HomePage({
 
       </motion.div>
 
-      {/* Краткие реквизиты (после авторизации) */}
-      <div className="mt-4 mb-24 text-center text-[11px] sm:text-xs text-gray-500">
-        <div className="inline-flex flex-col sm:flex-row sm:items-center sm:justify-center gap-1 sm:gap-2 bg-white/80 rounded-lg px-3 py-2 border border-gray-200">
-          <span>ИП Золочевская Дарья Николаевна</span>
-          <span className="hidden sm:inline">•</span>
-          <span>ИНН 432403568907</span>
-          <span className="hidden sm:inline">•</span>
-          <span>ОГРНИП 325774600435896</span>
-          <a href="/legal/requisites" className="text-blue-600 hover:underline">Подробнее</a>
-        </div>
-      </div>
-
       {/* Модальное окно для возрастных групп */}
-      <AgeGroupModal
+      <AgeGroupModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         groupType={selectedGroup}

@@ -23,7 +23,7 @@ export default function HomePage({
   const { activeBanners } = useBanners();
   const [currentBanner, setCurrentBanner] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery'>('babies');
+  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy'>('babies');
 
   const circleClass =
     "w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-white flex items-center justify-center shadow-md mb-3 border border-gray-200 group-hover:shadow-lg group-hover:border-gray-300 transition-all duration-300 mx-auto";
@@ -39,7 +39,7 @@ export default function HomePage({
     return () => clearInterval(interval);
   }, [activeBanners.length]);
 
-  const handleGroupClick = (group: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery') => {
+  const handleGroupClick = (group: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy') => {
     setSelectedGroup(group);
     setIsModalOpen(true);
   };
@@ -880,6 +880,77 @@ export default function HomePage({
               transition={{ delay: 1.7 }}
             >
               Дети и взрослые
+            </motion.p>
+          </motion.div>
+
+          {/* Каллиграфия */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('calligraphy')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.5,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+            className={circleClass}
+              animate={{
+                y: [0, -2, 0],
+                rotate: [0, 0.5, -0.5, 0]
+              }}
+              transition={{
+                duration: 5.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 5.2
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.03, 1],
+                  rotate: [0, 0.5, -0.5, 0]
+                }}
+                transition={{
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 5.4
+                }}
+              >
+                ✒️
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-gray-900 text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.7 }}
+            >
+              Каллиграфия
+            </motion.h3>
+            <motion.p 
+              className="text-gray-600 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.8 }}
+            >
+              Дети 7-11 лет
             </motion.p>
           </motion.div>
         </div>

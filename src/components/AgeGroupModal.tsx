@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 interface AgeGroupModalProps {
   isOpen: boolean;
   onClose: () => void;
-  groupType: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery';
+  groupType: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy';
 }
 
 export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupModalProps) {
@@ -1276,6 +1276,105 @@ export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupMo
     </div>
   );
 
+  const getCalligraphyContent = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-lg">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+            <div className="text-indigo-600 text-xs font-bold">7-11</div>
+          </div>
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Каллиграфия и чистописание</h2>
+        <p className="text-gray-600">для детей 7-11 лет</p>
+      </div>
+
+      <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
+        <p className="text-gray-700 leading-relaxed">
+          Наш курс предназначен для всех, кто хочет освоить искусство красивого и разборчивого письма. Мы научим писать аккуратно и красиво!
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+          <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+          Что мы развиваем:
+        </h3>
+        <div className="space-y-3">
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">✒️</span>
+            <div>
+              <p className="font-medium text-gray-800">Красивый почерк</p>
+              <p className="text-sm text-gray-600">правильные наклон, высота и соединения букв</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🖐️</span>
+            <div>
+              <p className="font-medium text-gray-800">Мелкую моторику</p>
+              <p className="text-sm text-gray-600">укрепляем мышцы руки для уверенного письма</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">⏱️</span>
+            <div>
+              <p className="font-medium text-gray-800">Скорость письма</p>
+              <p className="text-sm text-gray-600">учим писать быстро, не теряя аккуратности</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🧘</span>
+            <div>
+              <p className="font-medium text-gray-800">Терпение и концентрацию</p>
+              <p className="text-sm text-gray-600">развиваем усидчивость и внимание к деталям</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🎨</span>
+            <div>
+              <p className="font-medium text-gray-800">Эстетическое чувство</p>
+              <p className="text-sm text-gray-600">понимание красоты и гармонии в письме</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-xl border border-indigo-200">
+        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center">
+          <span className="text-indigo-600 mr-2">📝</span>
+          Результат занятий
+        </h3>
+        <div className="space-y-2">
+          <div className="flex items-start space-x-2">
+            <span className="text-indigo-600 font-bold mt-1">✅</span>
+            <p className="text-gray-700"><strong>Разборчивый почерк</strong> — учителя будут довольны!</p>
+          </div>
+          <div className="flex items-start space-x-2">
+            <span className="text-indigo-600 font-bold mt-1">✅</span>
+            <p className="text-gray-700"><strong>Уверенность в письме</strong> — ребёнок не стесняется писать</p>
+          </div>
+          <div className="flex items-start space-x-2">
+            <span className="text-indigo-600 font-bold mt-1">✅</span>
+            <p className="text-gray-700"><strong>Лучшие оценки</strong> — красивые тетради влияют на успеваемость</p>
+          </div>
+          <div className="flex items-start space-x-2">
+            <span className="text-indigo-600 font-bold mt-1">✅</span>
+            <p className="text-gray-700"><strong>Любовь к письму</strong> — превращаем рутину в удовольствие</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-indigo-100 p-4 rounded-xl border border-indigo-300">
+        <p className="text-gray-700 text-center leading-relaxed">
+          Занятия проходят в спокойной атмосфере, где каждый ученик получает максимальное внимание преподавателя. Мы не просто учимся выводить буквы, мы развиваем мелкую моторику, терпение, чувство гармонии и эстетики. 🌟
+        </p>
+      </div>
+    </div>
+  );
+
   const getContent = () => {
     switch (groupType) {
       case 'babies':
@@ -1300,6 +1399,8 @@ export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupMo
         return getDrawingContent();
       case 'pottery':
         return getPotteryContent();
+      case 'calligraphy':
+        return getCalligraphyContent();
       default:
         return null;
     }

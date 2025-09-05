@@ -53,9 +53,8 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           mes: text,
           fmt: '3', // JSON формат ответа
           charset: 'utf-8',
-          sender: 'GARMONIYA',
-          flash: '0',
-          bin: '0'
+          cost: '3', // Запрос стоимости перед отправкой
+          op: '1' // Использовать тарифный план
         })
       });
 

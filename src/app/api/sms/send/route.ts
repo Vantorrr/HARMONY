@@ -51,10 +51,7 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           psw: process.env.SMSC_PASSWORD,
           phones: phone,
           mes: text,
-          fmt: '3', // JSON формат ответа
-          charset: 'utf-8',
-          cost: '3', // Запрос стоимости перед отправкой
-          op: '1' // Использовать тарифный план
+          fmt: '3'
         })
       });
 

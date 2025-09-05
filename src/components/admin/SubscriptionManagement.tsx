@@ -63,7 +63,7 @@ export default function SubscriptionManagement({ adminUser }: SubscriptionManage
         clientName: 'Иван Сидоров',
         clientId: '2',
         type: 'individual',
-        name: 'Персональные тренировки',
+        name: 'Индивидуальные занятия',
         purchaseDate: '2024-07-20',
         expiryDate: '2024-08-20',
         totalSessions: 8,

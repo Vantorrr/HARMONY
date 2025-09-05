@@ -1,7 +1,7 @@
 {
   "name": "Harmony Fitness",
   "short_name": "Harmony",
-  "description": "Фитнес-центр Harmony - тренировки, абонементы, массаж",
+  "description": "Центр развития ребенка Harmony - занятия, абонементы, развитие",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

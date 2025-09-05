@@ -73,7 +73,7 @@ export default function ClientsList({ onSelectClient, adminUser }: ClientsListPr
         subscriptions: [
           {
             id: 'sub2',
-            name: 'Персональные тренировки',
+            name: 'Индивидуальные занятия',
             remainingSessions: 3,
             expiryDate: '2024-08-20'
           }

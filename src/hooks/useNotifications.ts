@@ -219,8 +219,8 @@ export function useNotifications() {
   const sendTestNotification = useCallback((type: 'reminder' | 'expiry' | 'balance' | 'promotion' = 'reminder') => {
     const testNotifications = {
       reminder: {
-        title: '⏰ Напоминание о тренировке',
-        body: 'Ваша тренировка начнется через 30 минут!',
+        title: '⏰ Напоминание о занятии',
+        body: 'Ваше занятие начнется через 30 минут!',
         data: { type: 'reminder', action: 'view' }
       },
       expiry: {

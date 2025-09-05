@@ -236,7 +236,7 @@ export function useAutoNotifications(options: AutoNotificationOptions = { enable
       }
     }
 
-    // Пример: напоминание о тренировке в понедельник утром
+    // Пример: напоминание о занятии в понедельник утром
     if (dayOfWeek === 1 && hour === 8) {
       const notificationKey = `monday_motivation_${dateStr}`;
       const sentNotifications = JSON.parse(localStorage.getItem('harmony_sent_notifications') || '[]');

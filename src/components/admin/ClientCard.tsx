@@ -52,7 +52,7 @@ export default function ClientCard({ client, onBack, adminUser }: ClientCardProp
         status: 'pending',
         type: 'personal',
         teacher: 'Игорь Петров',
-        subscription: 'Персональные тренировки',
+        subscription: 'Индивидуальные занятия',
         confirmedBy: null
       },
       {

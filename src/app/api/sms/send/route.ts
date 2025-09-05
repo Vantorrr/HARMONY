@@ -51,7 +51,8 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           psw: process.env.SMSC_PASSWORD,
           phones: phone,
           mes: text,
-          fmt: '3'
+          fmt: '3',
+          sender: process.env.SMSC_SENDER || 'GARMONIYA'
         })
       });
 

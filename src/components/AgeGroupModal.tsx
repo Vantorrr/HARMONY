@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 interface AgeGroupModalProps {
   isOpen: boolean;
   onClose: () => void;
-  groupType: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy';
+  groupType: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy' | 'english';
 }
 
 export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupModalProps) {
@@ -1375,6 +1375,84 @@ export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupMo
     </div>
   );
 
+  const getEnglishContent = () => (
+    <div className="space-y-6">
+      <div className="text-center">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-400 to-blue-500 flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-lg">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+            <div className="text-red-600 text-xs font-bold">EN</div>
+          </div>
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Английский язык</h2>
+        <p className="text-gray-600">для детей и взрослых</p>
+      </div>
+
+      <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+        <p className="text-gray-700 leading-relaxed">
+          Наши занятия по английскому языку проходят в интерактивной форме с использованием коммуникативной методики, которая делает упор на практику общения.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+          Основные особенности:
+        </h3>
+        <div className="space-y-3">
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">💬</span>
+            <div>
+              <p className="font-medium text-gray-800">Активное взаимодействие</p>
+              <p className="text-sm text-gray-600">минимум теории, максимум разговорной практики</p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🏃</span>
+            <div>
+              <p className="font-medium text-gray-800">TPR (Total Physical Response)</p>
+              <p className="text-sm text-gray-600">метод, связывающий речь с движениями для лучшего запоминания</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🎮</span>
+            <div>
+              <p className="font-medium text-gray-800">Игровые и ситуативные задания</p>
+              <p className="text-sm text-gray-600">моделирование реальных диалогов</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">📱</span>
+            <div>
+              <p className="font-medium text-gray-800">Современные материалы</p>
+              <p className="text-sm text-gray-600">видео, аудио, интерактивные упражнения</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-gray-100">
+            <span className="text-xl">🌍</span>
+            <div>
+              <p className="font-medium text-gray-800">Погружение в языковую среду</p>
+              <p className="text-sm text-gray-600">обучение через естественное общение</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center">
+          <span className="text-blue-600 mr-2">🚀</span>
+          Результат
+        </h3>
+        <p className="text-gray-700 leading-relaxed text-center">
+          Занятия подходят для любого уровня и помогают быстро преодолеть языковой барьер. 🚀
+        </p>
+      </div>
+    </div>
+  );
+
   const getContent = () => {
     switch (groupType) {
       case 'babies':
@@ -1401,6 +1479,8 @@ export default function AgeGroupModal({ isOpen, onClose, groupType }: AgeGroupMo
         return getPotteryContent();
       case 'calligraphy':
         return getCalligraphyContent();
+      case 'english':
+        return getEnglishContent();
       default:
         return null;
     }

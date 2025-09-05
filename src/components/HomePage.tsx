@@ -23,7 +23,7 @@ export default function HomePage({
   const { activeBanners } = useBanners();
   const [currentBanner, setCurrentBanner] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy'>('babies');
+  const [selectedGroup, setSelectedGroup] = useState<'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy' | 'english'>('babies');
 
   const circleClass =
     "w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-white flex items-center justify-center shadow-md mb-3 border border-gray-200 group-hover:shadow-lg group-hover:border-gray-300 transition-all duration-300 mx-auto";
@@ -39,7 +39,7 @@ export default function HomePage({
     return () => clearInterval(interval);
   }, [activeBanners.length]);
 
-  const handleGroupClick = (group: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy') => {
+  const handleGroupClick = (group: 'babies' | 'school' | 'adults' | 'complex' | 'speech' | 'math' | 'massage' | 'afterschool' | 'workshop' | 'drawing' | 'pottery' | 'calligraphy' | 'english') => {
     setSelectedGroup(group);
     setIsModalOpen(true);
   };
@@ -951,6 +951,77 @@ export default function HomePage({
               transition={{ delay: 1.8 }}
             >
               Дети 7-11 лет
+            </motion.p>
+          </motion.div>
+
+          {/* Английский язык */}
+          <motion.div
+            className="flex flex-col items-center text-center cursor-pointer group min-w-[90px] flex-shrink-0"
+            whileHover={{ 
+              scale: 1.08, 
+              y: -8,
+              transition: { type: "spring", stiffness: 400, damping: 17 }
+            }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => handleGroupClick('english')}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              transition: { 
+                delay: 1.6,
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }
+            }}
+          >
+            <motion.div 
+            className={circleClass}
+              animate={{
+                y: [0, -2, 0],
+                rotate: [0, 0.3, -0.3, 0]
+              }}
+              transition={{
+                duration: 5.8,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                delay: 5.6
+              }}
+            >
+              <motion.div 
+                className="text-4xl"
+                animate={{
+                  scale: [1, 1.02, 1],
+                  rotate: [0, 0.3, -0.3, 0]
+                }}
+                transition={{
+                  duration: 4.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 5.8
+                }}
+              >
+                🇬🇧
+              </motion.div>
+            </motion.div>
+            <motion.h3 
+              className="text-gray-900 text-sm font-bold mb-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.8 }}
+            >
+              Английский
+            </motion.h3>
+            <motion.p 
+              className="text-gray-600 text-xs"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.9 }}
+            >
+              Любой уровень
             </motion.p>
           </motion.div>
         </div>

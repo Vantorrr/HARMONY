@@ -11,6 +11,7 @@ interface HomePageProps {
   onShowClassManagement: () => void;
   onShowLoyaltyProgram: () => void;
   onShowSubscriptions: () => void;
+  onTabChange?: (tab: 'home' | 'classes' | 'bonuses' | 'teachers' | 'profile') => void;
 }
 
 export default function HomePage({ 
@@ -18,7 +19,8 @@ export default function HomePage({
   userBonusPoints, 
   onShowClassManagement, 
   onShowLoyaltyProgram,
-  onShowSubscriptions
+  onShowSubscriptions,
+  onTabChange
 }: HomePageProps) {
   const { activeBanners } = useBanners();
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -1140,7 +1142,7 @@ export default function HomePage({
 
         {/* Кнопка Бонусы */}
         <motion.button
-          onClick={onShowLoyaltyProgram}
+          onClick={() => onTabChange?.('bonuses')}
           className="w-full bg-white/90 backdrop-blur-sm rounded-2xl p-4 flex items-center justify-between shadow-lg"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}

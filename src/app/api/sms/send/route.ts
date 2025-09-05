@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Текст SMS (стандартный формат для авторизации)
-    const smsText = `Kod: ${code}`;
+    const smsText = `Код подтверждения: ${code}. Центр Гармония`;
 
     // Отправка SMS
     const sent = await sendSMSViaProvider(phone, smsText);

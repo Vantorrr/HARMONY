@@ -53,7 +53,9 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
           mes: text,
           fmt: '3', // JSON формат ответа
           charset: 'utf-8',
-          sender: process.env.SMSC_SENDER || ''
+          sender: 'GARMONIYA',
+          flash: '0',
+          bin: '0'
         })
       });
 
@@ -124,8 +126,8 @@ export async function POST(request: NextRequest) {
       attempts: 0
     });
 
-    // Текст SMS (упрощенный для прохождения фильтров SMSC)
-    const smsText = `Код подтверждения: ${code}. Центр Гармония`;
+    // Текст SMS (стандартный формат для авторизации)
+    const smsText = `Kod: ${code}`;
 
     // Отправка SMS
     const sent = await sendSMSViaProvider(phone, smsText);

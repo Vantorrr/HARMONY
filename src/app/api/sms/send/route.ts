@@ -58,11 +58,18 @@ const sendSMSViaProvider = async (phone: string, text: string): Promise<boolean>
       const result = await response.json();
       console.log('📤 Ответ SMSC.ru:', result);
       
+      // Проверяем успешную отправку: есть id или cnt
+      if (result.id || result.cnt) {
+        console.log('✅ SMS отправлена успешно, ID:', result.id || result.cnt);
+        return true;
+      }
+      
       if (result.error) {
         console.error('❌ Ошибка SMSC.ru:', result.error_code, result.error);
         return false;
       }
       
+      // Если нет ни id, ни error - считаем успешным
       return true;
     } else {
       // Демо режим

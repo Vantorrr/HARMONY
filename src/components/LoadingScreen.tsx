@@ -238,13 +238,9 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
 
                 {/* Title */}
                 <motion.h1 
-                  className="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-white mb-4"
+                  className="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-gray-900 mb-4"
                   animate={{ 
-                    textShadow: [
-                      "0 0 15px rgba(255,255,255,0.3)", 
-                      "0 0 25px rgba(255,255,255,0.5)", 
-                      "0 0 15px rgba(255,255,255,0.3)"
-                    ]
+                    scale: [1, 1.02, 1],
                   }}
                   transition={{ 
                     duration: 5, 
@@ -256,7 +252,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
                 </motion.h1>
 
                 <motion.p 
-                  className="text-lg sm:text-xl text-white/90 font-medium"
+                  className="text-lg sm:text-xl text-gray-700 font-medium"
                   animate={{ 
                     opacity: [0.8, 1, 0.8],
                   }}
@@ -281,7 +277,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
-              <div className="flex justify-between text-white/80 text-sm mb-2">
+              <div className="flex justify-between text-gray-700 text-sm mb-2">
                 <span>Загружаем волшебство...</span>
                 <span>{Math.round(progress)}%</span>
               </div>
@@ -312,7 +308,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
 
             {/* Loading messages */}
             <motion.div
-              className="text-white/70 text-sm"
+              className="text-gray-600 text-sm"
               animate={{ 
                 opacity: [0.6, 1, 0.6],
               }}

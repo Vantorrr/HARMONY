@@ -25,19 +25,26 @@ export default function TeachersAdmin() {
 
   useEffect(() => {
     const load = async () => {
+      // 1) Пытаемся прочитать из Firestore
       try {
         const snap = await getDocs(collection(db, 'teachers'));
-        if (!snap.empty) {
-          const list: Teacher[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
-          setTeachers(list);
+        const cloudList: Teacher[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
+        if (cloudList.length > 0) {
+          setTeachers(cloudList);
+          // синхронизируем локальный кэш
+          localStorage.setItem(LOCAL_KEY, JSON.stringify(cloudList));
           return;
         }
       } catch (e) {
-        // fallback to localStorage
-        const saved = localStorage.getItem(LOCAL_KEY);
-        if (saved) {
-          try { setTeachers(JSON.parse(saved)); } catch {}
-        }
+        // игнорируем и попробуем локальный кэш ниже
+      }
+
+      // 2) Если в облаке пусто или ошибка — показываем локальный кэш
+      const saved = localStorage.getItem(LOCAL_KEY);
+      if (saved) {
+        try { setTeachers(JSON.parse(saved)); } catch { setTeachers([]); }
+      } else {
+        setTeachers([]);
       }
     };
     load();
@@ -55,18 +62,25 @@ export default function TeachersAdmin() {
     }
     setIsSaving(true);
     try {
-      let photoUrl = photo;
+      // Пробуем загрузить фото, но не блокируем добавление при ошибке
+      let resolvedPhotoUrl = photo || '/images/logo/logo.png';
       if (photo && photo.startsWith('data:')) {
-        const storageRef = ref(storage, `teachers/${Date.now()}.jpg`);
-        await uploadString(storageRef, photo, 'data_url');
-        photoUrl = await getDownloadURL(storageRef);
+        try {
+          const storageRef = ref(storage, `teachers/${Date.now()}.jpg`);
+          await uploadString(storageRef, photo, 'data_url');
+          resolvedPhotoUrl = await getDownloadURL(storageRef);
+        } catch (err) {
+          console.warn('Не удалось загрузить фото, используем локальный URL/плейсхолдер', err);
+          resolvedPhotoUrl = '/images/logo/logo.png';
+        }
       }
+
       const docRef = await addDoc(collection(db, 'teachers'), {
         name: name.trim(),
         subtitle: subtitle.trim(),
-        photo: photoUrl || '/images/logo/logo.png'
+        photo: resolvedPhotoUrl
       });
-      const newTeacher = { id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: photoUrl || '/images/logo/logo.png' };
+      const newTeacher = { id: docRef.id, name: name.trim(), subtitle: subtitle.trim(), photo: resolvedPhotoUrl };
       const updatedList = [newTeacher, ...teachers];
       setTeachers(updatedList);
       // Дублируем в localStorage для быстрого доступа

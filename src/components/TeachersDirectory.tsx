@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { motion } from 'framer-motion';
 
@@ -33,38 +33,76 @@ export default function TeachersDirectory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Читаем только из localStorage (быстро и надёжно)
-    const loadTeachers = () => {
+    let unsubscribe: (() => void) | null = null;
+
+    const toCard = (arr: any[]): TeacherCardProps[] =>
+      arr.map(t => ({
+        name: t.name,
+        photo: t.photo || '/images/logo/logo.png',
+        subtitle: t.subtitle || 'Преподаватель'
+      }));
+
+    const loadFromLocal = () => {
       try {
         const saved = localStorage.getItem('harmony_teachers');
         if (saved) {
           const parsed = JSON.parse(saved) as any[];
-          const list = parsed.map(t => ({ 
-            name: t.name, 
-            photo: t.photo || '/images/logo/logo.png', 
-            subtitle: t.subtitle || 'Преподаватель' 
-          }));
-          setTeachers(list);
+          setTeachers(toCard(parsed));
         } else {
           setTeachers([]);
         }
       } catch {
         setTeachers([]);
       }
-      setLoading(false);
     };
 
-    loadTeachers();
+    const init = async () => {
+      setLoading(true);
+      // Подписываемся на Firestore; если пусто — используем локальный кэш один раз
+      try {
+        unsubscribe = onSnapshot(collection(db, 'teachers'), (snap) => {
+          const cloud = snap.docs.map(d => d.data());
+          if (cloud.length > 0) {
+            const list = toCard(cloud as any[]);
+            setTeachers(list);
+            // синхронизируем локальный кэш
+            localStorage.setItem('harmony_teachers', JSON.stringify(cloud));
+          } else {
+            loadFromLocal();
+          }
+          setLoading(false);
+        }, (err) => {
+          console.warn('Firestore onSnapshot error:', err);
+          loadFromLocal();
+          setLoading(false);
+        });
 
-    // Слушаем изменения localStorage (для синхронизации между вкладками)
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'harmony_teachers') {
-        loadTeachers();
+        // Однократно проверяем наличие в облаке, если подписка задерживается
+        const firstSnap = await getDocs(collection(db, 'teachers'));
+        if (firstSnap.empty) {
+          loadFromLocal();
+          setLoading(false);
+        }
+      } catch (e) {
+        loadFromLocal();
+        setLoading(false);
       }
     };
 
+    init();
+
+    // Слушаем изменения localStorage (синхронизация между вкладками)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'harmony_teachers') {
+        loadFromLocal();
+      }
+    };
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   return (
